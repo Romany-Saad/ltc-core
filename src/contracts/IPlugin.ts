@@ -22,6 +22,6 @@ export default interface IPlugin {
   * from the register function so it's a good point for code that
   * depends on services from other plugins/services
   * */
-  init(): void
+  init(container: App): void
 }
 

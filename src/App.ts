@@ -24,7 +24,7 @@ export default class App extends Container {
   * used to initialize plugins after registering them
   * */
   public init(){
-    this.plugins.forEach(plugin => plugin.init());
+    this.plugins.forEach(plugin => plugin.init(this));
   }
 
 }
