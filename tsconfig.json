@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "./lib",
+        "rootDir": "./src",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": true,
+        "types": ["reflect-metadata","node"],
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es2015",
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+        "./__tests__/",
+        "./lib/"
+    ]
+}

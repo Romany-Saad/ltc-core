@@ -1,0 +1,18 @@
+{
+    "name": "@lattice/core",
+    "version": "1.0.0",
+    "main": "./lib/index",
+    "typings": "./lib/index",
+    "license": "MIT",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "inversify": "^4.11.1",
+        "reflect-metadata": "^0.1.12"
+    },
+    "devDependencies": {
+        "@types/node": "^9.6.4"
+    }
+}
