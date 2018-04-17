@@ -6,4 +6,5 @@ export default class App extends Container {
     addPlugin(plugin: IPlugin): void;
     register(): void;
     init(): void;
+    config(): object;
 }
