@@ -27,7 +27,7 @@ export default class App extends Container {
     this.plugins.forEach(plugin => plugin.init(this));
   }
 
-  public config(): object {
+  public config(): any {
     if(this.isBound('config')){
       return this.get('config');
     }else{
