@@ -6,6 +6,12 @@ import App from "../App";
 * be initialized
 * */
 export default interface IPlugin {
+
+  /*
+  * the name of this plugin
+  * */
+  readonly name : string
+
   /*
   * used to provide access to the App container to register all
   * services provided by the plugin
