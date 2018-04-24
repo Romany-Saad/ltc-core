@@ -1,9 +1,10 @@
 import "reflect-metadata"
 import { Container } from "inversify"
 import { makeExecutableSchema } from "graphql-tools"
-import { IPlugin, IConfiguration } from "./contracts"
 import { GraphQLSchema } from "graphql"
 import { merge } from "lodash"
+import { IPlugin, IConfiguration } from "./contracts"
+import defaultSchema from "./schema"
 
 export default class App extends Container {
 
@@ -11,6 +12,11 @@ export default class App extends Container {
   private schemas: string[] = []
   private resolvers: object[] = []
   private executableSchema: GraphQLSchema
+
+  constructor(){
+    super()
+    this.addSchema(defaultSchema)
+  }
 
   /*
   * adds a new plugin to the plugins array to initialize later

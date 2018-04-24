@@ -12,7 +12,7 @@ describe("given an instance of App", () => {
   const schema = app.getExecutableSchema();
 
   it("can receive partials", () => {
-    expect(app.getSchemas().length).toBe(2);
+    expect(app.getSchemas().length).toBe(3);
   });
 
   it("can extend graphql existing schema with new partials", () => {
