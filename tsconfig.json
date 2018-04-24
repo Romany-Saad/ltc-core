@@ -1,19 +1,26 @@
 {
-    "compilerOptions": {
-        "outDir": "./lib",
-        "rootDir": "./src",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "declaration": true,
-        "types": ["reflect-metadata","node"],
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "module": "commonjs",
-        "target": "es2015",
-        "allowSyntheticDefaultImports": true
-    },
-    "exclude": [
-        "./__tests__/",
-        "./lib/"
-    ]
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "types": [
+      "reflect-metadata",
+      "node"
+    ],
+    "lib": [
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es2015",
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "./__tests__/",
+    "./lib/",
+    "**/*.graphql"
+  ]
 }

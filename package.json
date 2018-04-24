@@ -1,18 +1,33 @@
 {
-    "name": "@lattice/core",
-    "version": "1.0.0",
-    "main": "./lib/index",
-    "typings": "./lib/index",
-    "license": "MIT",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "tsc --watch"
-    },
-    "dependencies": {
-        "inversify": "^4.11.1",
-        "reflect-metadata": "^0.1.12"
-    },
-    "devDependencies": {
-        "@types/node": "^9.6.4"
-    }
+  "name": "@lattice/core",
+  "version": "1.0.0",
+  "main": "./lib/index",
+  "typings": "./lib/index",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --watchAll --coverage",
+    "test:staged": "./node_modules/.bin/jest --forceExit",
+    "lib:generate": "rm -rf ./lib/* && tsc && git add ./lib/**",
+    "lint": "tslint -p tslint.json",
+    "start": "tsc --watch"
+  },
+  "pre-commit": [
+    "lint",
+    "lib:generate",
+    "test:staged"
+  ],
+  "dependencies": {
+    "@types/lodash": "^4.14.107",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^2.24.0",
+    "inversify": "^4.11.1",
+    "lodash": "^4.17.5",
+    "reflect-metadata": "^0.1.12"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/node": "^9.6.4",
+    "jest": "^22.4.3",
+    "pre-commit": "^1.2.2"
+  }
 }

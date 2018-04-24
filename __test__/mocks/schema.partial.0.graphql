@@ -1,0 +1,7 @@
+type Query {
+    getConfigurations: String
+}
+
+type Mutation {
+    addConfigurations(key: String!, value: String!): String
+}
