@@ -13,7 +13,7 @@ export default class App extends Container {
   private resolvers: object[] = []
   private executableSchema: GraphQLSchema
 
-  constructor(){
+  constructor () {
     super()
     this.addSchema(defaultSchema)
   }
