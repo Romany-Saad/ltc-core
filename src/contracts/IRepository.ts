@@ -19,4 +19,14 @@ export default interface IRepository<T> {
   * removes a set of items from collection
   * */
   remove (items: T[]): boolean
+
+  /*
+  * parser a plain object and returns a model
+  * */
+  parse (data: object): T
+
+  /*
+  * serializes a model into a plain js object
+  * */
+  serialize (item: T): object
 }
