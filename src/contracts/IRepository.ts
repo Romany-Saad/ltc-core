@@ -1,3 +1,5 @@
+import IStringKeyedObject from "./IStringKeyedObject"
+
 export default interface IRepository<T> {
 
   /*
@@ -28,7 +30,7 @@ export default interface IRepository<T> {
   /*
   * parser a plain object and returns a model
   * */
-  parse (data: object): T
+  parse (data: IStringKeyedObject): T
 
   /*
   * serializes a model into a plain js object
