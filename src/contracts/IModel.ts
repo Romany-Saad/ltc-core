@@ -28,4 +28,9 @@ export default interface IModel extends ISerializable {
   * */
   getId (): string
 
+  /*
+  * validates the value returned from IModel.serialize() against
+  * */
+  validate (): object
+
 }

@@ -13,15 +13,23 @@ instance of `GraphQLSchema`
 contracts are just interfaces but we use the term contract just to make
 less vague as the term Interface is used in many contexts in different
 meanings
-## IModel
-the IModel contract specifies the constraints on which an object can be
-used as a DB Model
-### methods
-#### `parse(data: object): IModel`
-parses a given plain JS object into an IModel instance
+
+## `ISerializable`
+
+### Methods
 
 #### `serialize(model: IModel): object`
 serializes a given IModel instance into a plain JS object
+
+## `IModel`
+specifies the constraints on which an object can be used as a DB Model
+
+### Methods
+the `IModel` interface extends the `ISerializable` interface so it has
+its methods in addition to the following.
+
+#### `parse(data: object): IModel`
+parses a given plain JS object into an IModel instance
 
 #### `getIdFieldName(): string`
 returns the name of the id field to be used in setId
@@ -37,3 +45,6 @@ this operation
 
 #### `getId(): string`
 returns the model `id` property
+
+#### `validate (): object`
+
