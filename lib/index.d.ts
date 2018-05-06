@@ -1,4 +1,5 @@
 import App from './App';
 import * as contracts from './contracts';
-export { contracts };
+import * as utils from './utils';
+export { contracts, utils };
 export default App;

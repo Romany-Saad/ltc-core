@@ -1,7 +1,6 @@
-import IStringKeyedObject from "./IStringKeyedObject";
-export default interface IModel {
+import { IStringKeyedObject, ISerializable } from "./";
+export default interface IModel extends ISerializable {
     parse(data: IStringKeyedObject): IModel;
-    serialize(): IStringKeyedObject;
     getIdFieldName(): string;
     set(data: IStringKeyedObject): void;
     setId(id: string): void;

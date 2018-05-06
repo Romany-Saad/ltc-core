@@ -1,15 +1,10 @@
-import IStringKeyedObject from "./IStringKeyedObject"
+import { IStringKeyedObject, ISerializable } from "./"
 
-export default interface IModel {
+export default interface IModel extends ISerializable {
   /*
   * parses a given plain JS object into an IModel instance
   * */
   parse (data: IStringKeyedObject): IModel
-
-  /*
-  * serializes a given IModel instance into a plain JS object
-  * */
-  serialize (): IStringKeyedObject
 
   /*
   * returns the name of the id field to be used in setId
