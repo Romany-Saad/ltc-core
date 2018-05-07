@@ -46,5 +46,13 @@ this operation
 #### `getId(): string`
 returns the model `id` property
 
-#### `validate (): object`
+#### `getSchema (): IStringKeyedObject`
+returns the schema used to validate the state of the model
+
+#### `selfValidate (): boolean`
+validates the value returned from IModel.serialize() against
+the model's schema
+
+#### `getErrors (): object`
+returns an array of errors that resulted from the last validation
 

@@ -5,5 +5,7 @@ export default interface IModel extends ISerializable {
     set(data: IStringKeyedObject): void;
     setId(id: string): void;
     getId(): string;
-    validate(): object;
+    getSchema(): IStringKeyedObject;
+    selfValidate(): boolean;
+    getErrors(): object;
 }

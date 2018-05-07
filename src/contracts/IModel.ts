@@ -29,8 +29,18 @@ export default interface IModel extends ISerializable {
   getId (): string
 
   /*
-  * validates the value returned from IModel.serialize() against
+  * returns the schema used to validate the state of the model
   * */
-  validate (): object
+  getSchema (): IStringKeyedObject
 
+  /*
+  * validates the value returned from IModel.serialize() against
+  * the model's schema
+  * */
+  selfValidate (): boolean
+
+  /*
+  * returns an array of errors that resulted from the last validation
+  * */
+  getErrors (): object
 }
