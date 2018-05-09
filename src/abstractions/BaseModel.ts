@@ -1,17 +1,11 @@
-import Ajv = require("ajv")
 import { ErrorObject, ValidateFunction } from "ajv"
 import { IModel, IStringKeyedObject } from "../contracts"
-import { isSerializable } from "../utils"
+import { yamlSchemaLoader, isSerializable } from "../utils"
 
 export default abstract class BaseModel implements IModel {
   protected data: IStringKeyedObject = {}
   protected id: string = undefined
-  protected removeAdditional: boolean = true
-  protected validateFunction: ValidateFunction
-  protected abstract schema: IStringKeyedObject
-  protected idSchema: IStringKeyedObject = {
-    "type": "string",
-  }
+  protected validateFunction: ValidateFunction = undefined
 
   protected constructor (data: IStringKeyedObject = undefined) {
     this.set(data)
@@ -25,8 +19,6 @@ export default abstract class BaseModel implements IModel {
     return this.id
   }
 
-  abstract parse (data: IStringKeyedObject): IModel
-
   getIdFieldName (): string {
     return "_id"
   }
@@ -39,7 +31,7 @@ export default abstract class BaseModel implements IModel {
       serialized[key] = typeof value === "object" && isSerializable(value) ? value.serialize() : value
     })
 
-    return Object.assign({}, serialized,)
+    return Object.assign({}, serialized)
   }
 
   set (data: IStringKeyedObject): void {
@@ -52,11 +44,17 @@ export default abstract class BaseModel implements IModel {
 
   selfValidate (): boolean {
     if (!this.validateFunction) {
-      this.validateFunction =
-        Ajv({removeAdditional: this.removeAdditional})
-          .compile(this.getSchema())
+      const schema = this.getSchema()
+      let id: string
+      if (typeof schema === "string") {
+        id = yamlSchemaLoader.loadSchema(schema)
+      } else if (typeof schema === "object") {
+        yamlSchemaLoader.addSchema(schema)
+        id = schema["$id"]
+      }
+      if (!id) throw new Error("schema not found")
+      this.validateFunction = yamlSchemaLoader.getSchema(id)
     }
-
     return <boolean>this.validateFunction(this.serialize())
   }
 
@@ -64,12 +62,5 @@ export default abstract class BaseModel implements IModel {
     return this.validateFunction.errors
   }
 
-  getSchema (): IStringKeyedObject {
-    if (!this.schema.hasOwnProperty("properties")) {
-      throw new Error("schema doesn't have properties field defined")
-    }
-    const tempSchema = Object.assign({}, this.schema)
-    tempSchema.properties[this.getIdFieldName()] = this.idSchema
-    return tempSchema
-  }
+  abstract getSchema (): IStringKeyedObject | string
 }

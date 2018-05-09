@@ -2,11 +2,6 @@ import { IStringKeyedObject, ISerializable } from "./"
 
 export default interface IModel extends ISerializable {
   /*
-  * parses a given plain JS object into an IModel instance
-  * */
-  parse (data: IStringKeyedObject): IModel
-
-  /*
   * returns the name of the id field to be used in setId
   * */
   getIdFieldName (): string
@@ -31,7 +26,7 @@ export default interface IModel extends ISerializable {
   /*
   * returns the schema used to validate the state of the model
   * */
-  getSchema (): IStringKeyedObject
+  getSchema (): IStringKeyedObject | string
 
   /*
   * validates the value returned from IModel.serialize() against

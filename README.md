@@ -55,4 +55,3 @@ the model's schema
 
 #### `getErrors (): object`
 returns an array of errors that resulted from the last validation
-

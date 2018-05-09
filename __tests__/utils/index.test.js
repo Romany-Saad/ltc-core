@@ -1,4 +1,4 @@
-const { isSerializable } = require("../lib/utils");
+const { isSerializable } = require("../../lib/utils");
 
 describe(`isSerializable is a function that checks 
 if a given object has serialize method or not`, () => {

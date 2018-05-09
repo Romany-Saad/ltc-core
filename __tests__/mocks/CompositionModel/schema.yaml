@@ -1,0 +1,5 @@
+$id: "lattice.core:__tests__.composition_model"
+type: "object"
+required: [foo]
+properties:
+  foo: { "$ref": "lattice.core:contact_email#/definitions/ContactEmail" }
