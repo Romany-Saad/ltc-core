@@ -1,8 +1,8 @@
 import App from "../App";
 export default interface IPlugin {
     readonly name: string;
-    register(container: App): void;
-    init(container: App): void;
+    register(container: App): Promise<void>;
+    init(container: App): Promise<void>;
     getSchema(): string;
     getResolvers(): object;
 }

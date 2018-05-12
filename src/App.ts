@@ -28,15 +28,19 @@ export default class App extends Container {
   /*
   * used to register all plugins and services
   * */
-  public register () {
-    this.plugins.forEach(plugin => plugin.register(this))
+  public register (): Promise<void[]> {
+    const promises: Promise<void>[] = []
+    this.plugins.forEach(plugin => promises.push(plugin.register(this)))
+    return Promise.all(promises)
   }
 
   /*
   * used to initialize plugins after registering them
   * */
-  public init () {
-    this.plugins.forEach(plugin => plugin.init(this))
+  public init (): Promise<void[]> {
+    const promises: Promise<void>[] = []
+    this.plugins.forEach(plugin => promises.push(plugin.init(this)))
+    return Promise.all(promises)
   }
 
   /*

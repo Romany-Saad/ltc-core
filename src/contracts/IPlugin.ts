@@ -21,14 +21,14 @@ export default interface IPlugin {
   * place to register independent services or inject some values
   * into the container
   * */
-  register (container: App): void
+  register (container: App): Promise<void>
 
   /*
   * on this point dependencies has been injected into the container
   * from the register function so it's a good point for code that
   * depends on services from other plugins/services
   * */
-  init (container: App): void
+  init (container: App): Promise<void>
 
   /*
   * returns the GraphQl schema to merged with other schemas
@@ -41,5 +41,6 @@ export default interface IPlugin {
   * this method is requested by the app after getSchema()
   * */
   getResolvers (): object
+
 }
 
