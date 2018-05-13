@@ -3,11 +3,11 @@ const App = require("../../lib/App").default;
 // creating a new app instance
 const app = new App();
 
-// registering app services
-app.register();
+async function registerPluginsAndInitApp() {
+  await app.register();
+  await app.init();
+  app.loadGraphQlFromPlugins();
+  return app
+}
 
-// initializing app
-app.init();
-
-// exporting application
-module.exports = app;
+module.exports = registerPluginsAndInitApp;

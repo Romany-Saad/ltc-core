@@ -1,15 +1,31 @@
 const schemaPartials = require("./mocks/schema.partials");
 const schemaResolvers = require("./mocks/schema.resolvers");
-const app = require("./mocks/app");
+const registerPluginsAndInitApp = require("./mocks/app");
 const { graphql, GraphQLSchema } = require("graphql");
 
-describe("given an instance of App", () => {
+let app;
+let schema;
+beforeAll(async () => {
+  app = await registerPluginsAndInitApp();
   app.addSchema(schemaPartials[0]);
   app.addSchema(schemaPartials[1]);
   app.addResolvers(schemaResolvers[0]);
   app.addResolvers(schemaResolvers[1]);
+  schema = app.getExecutableSchema();
+});
 
-  const schema = app.getExecutableSchema();
+// todo: test App.addPlugin method
+
+describe("given an instance of App", () => {
+
+  it("should cache schema", () => {
+    expect(schema === app.getExecutableSchema()).toBe(true);
+  });
+
+  it("should throw an error when asked for a config while no config plugin is loaded", () => {
+    expect(() => app.config())
+      .toThrowError("configuration object not yet loaded");
+  });
 
   it("can receive partials", () => {
     expect(app.getSchemas().length).toBe(3);
