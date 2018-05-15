@@ -10,7 +10,7 @@ export default interface IRepository<T> {
   /*
   * query the collection to find a set of items
   * */
-  find (query: object): Promise<T[]>
+  find (query: object, limit: number, skip: number): Promise<T[]>
 
   /*
   * finds a set of items by ids
