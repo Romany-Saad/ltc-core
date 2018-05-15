@@ -7,4 +7,6 @@ export default interface IRepository<T> {
     remove(items: T[]): Promise<boolean>;
     parse(data: IStringKeyedObject): T;
     serialize(item: T): object;
+    beforeSave(item: T): Promise<any>;
+    afterSave(item: T): Promise<any>;
 }
