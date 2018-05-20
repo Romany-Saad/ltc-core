@@ -8,10 +8,17 @@ export default interface IModel extends ISerializable {
 
   /*
   * sets all the keys of `data` object to the inner state of the model also
-  * if a key is equal to value from `getIdFieldName()` it will should be
-  * handled handle by using `setId()` instead of directly setting it
+  * if a key is equal to value from `getIdFieldName()` it should be
+  * handled by using `setId()` instead of directly setting it
   * */
   set (data: IStringKeyedObject): void
+
+  /*
+  * gets a value corresponding to this key from model's inner state
+  * also if a key is equal to value from `getIdFieldName()` it should
+  * return the value of `getId()`
+  * */
+  get (key: string): any
 
   /*
   * sets the `id` property of the model and do any aside logic related to this operation

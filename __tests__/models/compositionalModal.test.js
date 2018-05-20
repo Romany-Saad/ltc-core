@@ -7,6 +7,7 @@ beforeAll(() => {
 });
 
 const validValue = {
+  username: "test__user_name",
   foo: {
     address: "test@domain.com",
     name: "test name",
@@ -48,6 +49,12 @@ describe("CompositionModel is a model that extends BaseModel class", () => {
     const x = new CompositionModel(Object.assign(validValue, { _id: "test_id_val" }));
     expect(x.getId()).toBe("test_id_val");
     expect(x.serialize()).toHaveProperty("_id");
+  });
+
+  it("should return the right data using get()", function () {
+    const x = new CompositionModel(Object.assign(validValue, { _id: "test_id_val" }));
+    expect(x.get("_id")).toBe(x.getId());
+    expect(x.get("username")).toBe("test__user_name");
   });
 
   it("should return true when validating valid data", () => {

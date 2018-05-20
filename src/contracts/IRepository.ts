@@ -36,16 +36,4 @@ export default interface IRepository<T> {
   * serializes a model into a plain js object
   * */
   serialize (item: T): object
-
-  /*
-  * before-save event
-  * an event triggers everytime before a model is saved or updated
-  * */
-  beforeSave (item: T): Promise<any>
-
-  /*
-  * before-save event
-  * an event triggers everytime after a model is saved or updated
-  * */
-  afterSave (item: T): Promise<any>
 }

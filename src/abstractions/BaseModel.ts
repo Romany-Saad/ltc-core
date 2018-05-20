@@ -7,7 +7,7 @@ export default abstract class BaseModel implements IModel {
   protected id: string = undefined
   protected validateFunction: ValidateFunction = undefined
 
-  protected constructor (data: IStringKeyedObject = undefined) {
+  constructor (data: IStringKeyedObject = undefined) {
     this.set(data)
   }
 
@@ -40,6 +40,11 @@ export default abstract class BaseModel implements IModel {
       delete data[this.getIdFieldName()]
     }
     this.data = Object.assign({}, this.data, data)
+  }
+
+  get (key: string): any {
+    if (key === this.getIdFieldName()) return this.getId()
+    return this.data[key]
   }
 
   selfValidate (): boolean {
