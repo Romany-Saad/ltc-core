@@ -5,6 +5,7 @@ export declare class YamlSchemaLoader {
     private attempted;
     private loaded;
     constructor(options?: object);
+    addPlugin(pluginFunction: any, options: object): void;
     loadSchema(filePath: string): string;
     addSchema(rawSchema: object): boolean;
     getSchema(id: string): ValidateFunction;

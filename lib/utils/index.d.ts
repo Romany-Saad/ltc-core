@@ -1,4 +1,4 @@
 import { ISerializable } from "../contracts/index";
-import yamlSchemaLoader from "./YamlSchemaLoader";
+import index from "./YamlSchemaLoader";
 export declare const isSerializable: (object: any) => object is ISerializable;
-export { yamlSchemaLoader };
+export { index };

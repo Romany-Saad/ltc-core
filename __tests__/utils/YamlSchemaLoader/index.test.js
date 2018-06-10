@@ -1,11 +1,14 @@
-const yamlSchema = require("../../lib/utils/YamlSchemaLoader").default;
+const yamlSchema = require("../../../lib/utils/YamlSchemaLoader").default;
 const path = require("path");
 
 function getTestSchema(name) {
-  return path.resolve(__dirname, `../mocks/partialDbSchemas/${name}`);
+  return path.resolve(__dirname, `../../mocks/partialDbSchemas/${name}`);
 }
 
 describe("given YamlSchemaLoader is a static way to cache and load yaml files", () => {
+
+  //todo: should be able to add plugins
+
   it("should cache loaded files", () => {
     yamlSchema.loadSchema(getTestSchema("testaddress.yaml"));
   });

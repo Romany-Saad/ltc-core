@@ -2,7 +2,7 @@ import yaml = require("js-yaml")
 import Ajv = require("ajv")
 import * as fs from "fs"
 import { ValidateFunction } from "ajv"
-import IStringKeyedObject from "../contracts/IStringKeyedObject"
+import IStringKeyedObject from "../../contracts/IStringKeyedObject"
 
 export class YamlSchemaLoader {
   public ajv: Ajv.Ajv
@@ -14,6 +14,10 @@ export class YamlSchemaLoader {
     this.ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'))
   }
 
+  addPlugin (pluginFunction: any, options: object) {
+    this.ajv = pluginFunction(this.ajv, options)
+  }
+
   public loadSchema (filePath: string): string {
     if (this.attempted.indexOf(filePath) >= 0)
       return this.loaded[filePath]
@@ -23,7 +27,7 @@ export class YamlSchemaLoader {
 
     // loading schema from file system
     const rawSchema = <IStringKeyedObject> yaml.safeLoad(fs.readFileSync(filePath, 'utf8'))
-    if(!rawSchema.hasOwnProperty("$id")) throw new Error(`schema file: ${filePath} doesn't have $id property`)
+    if (!rawSchema.hasOwnProperty("$id")) throw new Error(`schema file: ${filePath} doesn't have $id property`)
 
     // adding schema to pool
     if (!this.addSchema(rawSchema)) throw new Error(`invalid schema provided file: ${filePath}`)
