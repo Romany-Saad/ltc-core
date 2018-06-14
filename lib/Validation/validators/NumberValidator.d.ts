@@ -1,7 +1,10 @@
 import { ValidatorBase } from "../ValidatorBase";
+import { ContainingType } from "../intefaces";
 export default class NumberValidator extends ValidatorBase {
+    constructor(parent: ContainingType);
+    integer(): this;
     min(min: number, exclusive?: boolean): this;
     max(max: number, exclusive?: boolean): this;
     multipleOf(modulus: number): this;
-    protected readonly type: string;
+    readonly type: string;
 }

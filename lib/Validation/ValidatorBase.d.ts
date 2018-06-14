@@ -1,12 +1,11 @@
-import IValidationRule, { IValidationResult } from "./IValidationRule";
-import ObjectValidator from "./validators/ObjectValidator";
-export declare abstract class ValidatorBase {
-    private validators;
-    protected readonly path: string;
-    private readonly parent;
-    constructor(path?: string, parent?: ObjectValidator);
-    protected readonly abstract type: string;
+import IValidationRule, { ContainingType, IValidationResult, IValidationSet, IValidator } from "./intefaces";
+export declare abstract class ValidatorBase implements IValidator {
+    protected validators: IValidationSet;
+    protected readonly parent: ContainingType;
+    readonly abstract type: string;
+    constructor(parent?: ContainingType);
     addValidator(name: string, validator: IValidationRule, params: object): void;
-    validate(value: any): IValidationResult;
-    readonly _: ObjectValidator;
+    validate(value: any, path?: string): IValidationResult;
+    protected selfValidate(value: any, path?: string): IValidationResult;
+    readonly _: ContainingType;
 }

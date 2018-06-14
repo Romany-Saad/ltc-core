@@ -1,5 +1,16 @@
+import ObjectValidator from "./validators/ObjectValidator"
+import ArrayValidator from "./validators/ArrayValidator"
+
+export interface IValidator {
+  type: string
+  _: ContainingType
+
+  validate (value: any, path: string): IValidationResult
+
+}
+
 export default interface IValidationRule {
-  (value: any, obj: any): boolean
+  (value: any, obj: any, path: string): boolean
 }
 
 export interface IValidationResult {
@@ -18,3 +29,13 @@ export interface IValidationError {
   dataPath: string, // the path (a json pointer) to the part of the data that was validated.
   params: object,   // the object with the additional information about error that can be used to create custom error messages
 }
+
+
+export interface IValidationSet {
+  [key: string]: {
+    validate: IValidationRule
+    params: object
+  }
+}
+
+export type ContainingType = ObjectValidator | ArrayValidator

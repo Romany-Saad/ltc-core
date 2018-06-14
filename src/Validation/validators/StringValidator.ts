@@ -23,7 +23,7 @@ export default class StringValidator extends ValidatorBase {
       return this
     }
 
-    protected get type (): string {
+    get type (): string {
       return "string"
     }
   }
