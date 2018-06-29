@@ -1,6 +1,6 @@
 import { ErrorObject, ValidateFunction } from "ajv"
 import { IModel, IStringKeyedObject } from "../contracts"
-import { index, isSerializable } from "../utils"
+import { yamlSchemaLoader, isSerializable } from "../utils"
 
 export default abstract class BaseModel implements IModel {
   protected data: IStringKeyedObject = {}
@@ -52,13 +52,13 @@ export default abstract class BaseModel implements IModel {
       const schema = this.getSchema()
       let id: string
       if (typeof schema === "string") {
-        id = index.loadSchema(schema)
+        id = yamlSchemaLoader.loadSchema(schema)
       } else if (typeof schema === "object") {
-        index.addSchema(schema)
+        yamlSchemaLoader.addSchema(schema)
         id = schema["$id"]
       }
       if (!id) throw new Error("schema not found")
-      this.validateFunction = index.getSchema(id)
+      this.validateFunction = yamlSchemaLoader.getSchema(id)
     }
     return <boolean>this.validateFunction(this.serialize())
   }
