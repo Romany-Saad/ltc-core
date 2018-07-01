@@ -1,3 +1,4 @@
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import "reflect-metadata"
 import { Container } from "inversify"
 import { makeExecutableSchema } from "graphql-tools"
@@ -5,6 +6,11 @@ import { GraphQLSchema } from "graphql"
 import { merge } from "lodash"
 import { IPlugin, IConfiguration } from "./contracts"
 import defaultSchema from "./schema"
+import { Express } from "express"
+import server from "./express"
+
+const bodyParser = require('body-parser')
+
 
 export default class App extends Container {
 
@@ -16,6 +22,7 @@ export default class App extends Container {
   constructor () {
     super()
     this.addSchema(defaultSchema)
+    this.bind<Express>("server").toConstantValue(server)
   }
 
   /*
@@ -93,6 +100,29 @@ export default class App extends Container {
       resolvers: resolvers
     })
     return this.executableSchema
+  }
+
+  public server (): Express {
+    return this.get("server")
+  }
+
+  public start (): void {
+    const port = this.config().value().http.port || 80
+
+    // The GraphQL endpoint
+    const schema = this.getExecutableSchema()
+    server.use('/graphql', bodyParser.json(), graphqlExpress({
+      schema,
+      rootValue: this
+    }))
+
+    // GraphiQL, a visual editor for queries
+    server.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
+
+
+    this.server().listen(port, () => {
+      console.log(`server is listening on port ${port} Go to http://localhost:${port}/graphiql to run queries!`)
+    })
   }
 
   /*

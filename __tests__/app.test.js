@@ -2,9 +2,9 @@ const schemaPartials = require("./mocks/schema.partials");
 const schemaResolvers = require("./mocks/schema.resolvers");
 const registerPluginsAndInitApp = require("./mocks/app");
 const { graphql, GraphQLSchema } = require("graphql");
+const express = require("express");
 
-let app;
-let schema;
+let app, schema;
 beforeAll(async () => {
   app = await registerPluginsAndInitApp();
   app.addSchema(schemaPartials[0]);
@@ -20,6 +20,13 @@ describe("given an instance of App", () => {
 
   it("should cache schema", () => {
     expect(schema === app.getExecutableSchema()).toBe(true);
+  });
+
+  it("should have an instance of express server bound", () => {
+    const s = app.get("server");
+    expect(s.constructor.toString()).toBe(express().constructor.toString());
+    expect(s).toHaveProperty("post");
+    expect(s).toHaveProperty("listen");
   });
 
   it("should throw an error when asked for a config while no config plugin is loaded", () => {

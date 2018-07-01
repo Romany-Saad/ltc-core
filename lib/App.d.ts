@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { GraphQLSchema } from "graphql";
 import { IPlugin, IConfiguration } from "./contracts";
+import { Express } from "express";
 export default class App extends Container {
     private plugins;
     private schemas;
@@ -17,5 +18,7 @@ export default class App extends Container {
     getSchemas(): string[];
     getResolvers(): object[];
     getExecutableSchema(): GraphQLSchema;
+    server(): Express;
+    start(): void;
     config(): IConfiguration;
 }
