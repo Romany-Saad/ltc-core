@@ -6,4 +6,10 @@ export const isSerializable = (object: any): object is ISerializable => {
   return 'serialize' in object && typeof object.serialize === "function"
 }
 
-export { yamlSchemaLoader }
+class namer {
+  static resolve (plugin: string, resource: string, what: string) {
+    return `${plugin}.${resource}.${what}`
+  }
+}
+
+export { yamlSchemaLoader, namer }
