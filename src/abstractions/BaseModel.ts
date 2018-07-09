@@ -1,11 +1,13 @@
-import { ErrorObject, ValidateFunction } from "ajv"
 import { IModel, IStringKeyedObject } from "../contracts"
-import { yamlSchemaLoader, isSerializable } from "../utils"
+import { isSerializable } from "../utils"
+import { Context } from "@cyber-crafts/validate"
+import { ITypeValidator, IValidationResult } from "@cyber-crafts/validate/lib/intefaces"
 
 export default abstract class BaseModel implements IModel {
-  protected data: IStringKeyedObject = {}
   protected id: string = undefined
-  protected validateFunction: ValidateFunction = undefined
+  protected data: IStringKeyedObject = {}
+  protected schema: ITypeValidator = undefined
+  protected state: IValidationResult = undefined
 
   constructor (data: IStringKeyedObject = undefined) {
     this.set(data)
@@ -47,25 +49,22 @@ export default abstract class BaseModel implements IModel {
     return this.data[key]
   }
 
-  selfValidate (): boolean {
-    if (!this.validateFunction) {
-      const schema = this.getSchema()
-      let id: string
-      if (typeof schema === "string") {
-        id = yamlSchemaLoader.loadSchema(schema)
-      } else if (typeof schema === "object") {
-        yamlSchemaLoader.addSchema(schema)
-        id = schema["$id"]
-      }
-      if (!id) throw new Error("schema not found")
-      this.validateFunction = yamlSchemaLoader.getSchema(id)
+  selfValidate (): Promise<IValidationResult> {
+    const validation = Context.validate(this.getSchema(), this.serialize())
+    try {
+      return validation
+    } finally {
+      validation.then((result: IValidationResult) => {
+        this.state = result
+      })
     }
-    return <boolean>this.validateFunction(this.serialize())
   }
 
-  getErrors (): ErrorObject[] {
-    return this.validateFunction.errors
+  getResult (): IValidationResult {
+    return this.state
   }
 
-  abstract getSchema (): IStringKeyedObject | string
+  getSchema (): ITypeValidator {
+    return this.schema
+  }
 }

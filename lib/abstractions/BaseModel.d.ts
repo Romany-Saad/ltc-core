@@ -1,9 +1,10 @@
-import { ErrorObject, ValidateFunction } from "ajv";
 import { IModel, IStringKeyedObject } from "../contracts";
+import { ITypeValidator, IValidationResult } from "@cyber-crafts/validate/lib/intefaces";
 export default abstract class BaseModel implements IModel {
-    protected data: IStringKeyedObject;
     protected id: string;
-    protected validateFunction: ValidateFunction;
+    protected data: IStringKeyedObject;
+    protected schema: ITypeValidator;
+    protected state: IValidationResult;
     constructor(data?: IStringKeyedObject);
     setId(id: string): void;
     getId(): string;
@@ -11,7 +12,7 @@ export default abstract class BaseModel implements IModel {
     serialize(): IStringKeyedObject;
     set(data: IStringKeyedObject): void;
     get(key: string): any;
-    selfValidate(): boolean;
-    getErrors(): ErrorObject[];
-    abstract getSchema(): IStringKeyedObject | string;
+    selfValidate(): Promise<IValidationResult>;
+    getResult(): IValidationResult;
+    getSchema(): ITypeValidator;
 }

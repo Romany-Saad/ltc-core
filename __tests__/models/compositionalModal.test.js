@@ -1,10 +1,4 @@
 import CompositionModel from "../mocks/CompositionModel";
-import yamlSchemaLoader from "../../lib/utils/YamlSchemaLoader";
-import path from "path";
-
-beforeAll(() => {
-  yamlSchemaLoader.loadSchema(path.resolve(__dirname, "../../resources/schemas/ContactEmail.yaml"));
-});
 
 const validValue = {
   username: "test__user_name",
@@ -16,11 +10,6 @@ const validValue = {
 const invalidValue = {};
 
 describe("CompositionModel is a model that extends BaseModel class", () => {
-  it("should be able to compile successfully with reference", () => {
-    const x = new CompositionModel(validValue);
-    const y = () => x.selfValidate();
-    expect(y).not.toThrow()
-  });
 
   it("should set data and serialize data correctly", () => {
     const x = new CompositionModel(validValue);
@@ -57,15 +46,15 @@ describe("CompositionModel is a model that extends BaseModel class", () => {
     expect(x.get("username")).toBe("test__user_name");
   });
 
-  it("should return true when validating valid data", () => {
+  it("should return true when validating valid data", async () => {
     const x = new CompositionModel(validValue);
-    expect(x.selfValidate()).toBe(true);
+    const y = await x.selfValidate();
+    expect(y).toHaveProperty("success", true);
   });
 
-  it("should  return false when validating invalid data with errors", () => {
+  it("should  return false when validating invalid data with errors", async () => {
     const x = new CompositionModel(invalidValue);
-    expect(x.selfValidate()).toBe(false);
-    expect(x.getErrors().length).toBeGreaterThan(0);
-    expect(x.getErrors()[0]).toHaveProperty("dataPath");
+    await x.selfValidate();
+    expect(x.getResult()).toHaveProperty("errors.length",2);
   });
 });

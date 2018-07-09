@@ -1,4 +1,5 @@
 import { IStringKeyedObject, ISerializable } from "./"
+import { ITypeValidator, IValidationResult } from "@cyber-crafts/validate/lib/intefaces"
 
 export default interface IModel extends ISerializable {
   /*
@@ -33,16 +34,16 @@ export default interface IModel extends ISerializable {
   /*
   * returns the schema used to validate the state of the model
   * */
-  getSchema (): IStringKeyedObject | string
+  getSchema (): ITypeValidator
 
   /*
   * validates the value returned from IModel.serialize() against
   * the model's schema
   * */
-  selfValidate (): boolean
+  selfValidate (): Promise<IValidationResult>
 
   /*
-  * returns an array of errors that resulted from the last validation
+  * returns the result of last validation
   * */
-  getErrors (): object
+  getResult (): IValidationResult
 }
