@@ -1,8 +1,8 @@
-import BaseModel from "../../../lib/abstractions/BaseModel";
+const BaseModel = require("../../../lib/abstractions/BaseModel").default;
 
-import c2v from "@cyber-crafts/validate";
+const c2v = require("@cyber-crafts/validate").default;
 
-export default class CompositionModel extends BaseModel {
+module.exports = class CompositionModel extends BaseModel {
   parse(data) {
     return new CompositionModel(data);
   }
