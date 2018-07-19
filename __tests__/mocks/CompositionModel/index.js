@@ -1,6 +1,6 @@
 const BaseModel = require("../../../lib/abstractions/BaseModel").default;
 
-const c2v = require("@cyber-crafts/validate").default;
+const c2v = require("c2v").default;
 
 module.exports = class CompositionModel extends BaseModel {
   parse(data) {

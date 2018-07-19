@@ -17,7 +17,7 @@
     "test:staged"
   ],
   "dependencies": {
-    "@cyber-crafts/validate": "git+ssh://git@github.com:cyber-crafts/validate.git",
+    "c2v": ">=1.0.0",
     "@types/express": "^4.16.0",
     "@types/lodash": "^4.14.107",
     "@types/node": "^10.5.2",

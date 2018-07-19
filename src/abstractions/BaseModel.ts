@@ -1,7 +1,7 @@
 import { IModel, IStringKeyedObject } from "../contracts"
 import { isSerializable } from "../utils"
-import { Context } from "@cyber-crafts/validate"
-import { ITypeValidator, IValidationResult } from "@cyber-crafts/validate/lib/intefaces"
+import { Context } from "c2v"
+import { ITypeValidator, IValidationResult } from "c2v/lib/intefaces"
 
 export default abstract class BaseModel implements IModel {
   protected id: string = undefined
