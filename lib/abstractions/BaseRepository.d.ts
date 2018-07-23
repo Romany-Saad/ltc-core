@@ -5,6 +5,7 @@ export default abstract class BaseRepository<T> implements IRepository<T> {
     static readonly collectionName: string;
     abstract find(query: object, limit: number, skip: number): Promise<T[]>;
     abstract findByIds(ids: string[]): Promise<T[]>;
+    abstract count(query: object): Promise<number>;
     abstract insert(items: T[]): Promise<T[]>;
     abstract parse(data: IStringKeyedObject): T;
     abstract remove(items: T[]): Promise<boolean>;
