@@ -10,8 +10,7 @@ export default class App extends Container {
     private executableSchema;
     constructor();
     addPlugin(plugin: IPlugin): void;
-    register(): Promise<void>;
-    init(): Promise<void>;
+    load(): Promise<void>;
     addSchema(schema: string): void;
     addResolvers(resolvers: object): void;
     loadGraphQlFromPlugins(): void;
