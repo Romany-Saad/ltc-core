@@ -1,131 +1,91 @@
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import "reflect-metadata"
 import { Container } from "inversify"
-import { makeExecutableSchema } from "graphql-tools"
-import { GraphQLSchema } from "graphql"
-import { merge } from "lodash"
 import { IPlugin, IConfiguration } from "./contracts"
-import defaultSchema from "./schema"
 import { Express } from "express"
-import server from "./express"
+import express  from "./express"
+import { namer } from "./utils"
+import { Server } from "http"
 
-const bodyParser = require('body-parser')
+const EventEmitter = require("events")
 
+export const names = {
+  APP_SERVICE_SERVER: Symbol(namer.resolve("app", "services", "server")),
+  APP_SERVICE_EXPRESS: Symbol(namer.resolve("app", "services", "express")),
+  APP_SERVICE_CONFIG: Symbol(namer.resolve("app", "services", "config")),
+  EV_PLUGINS_LOADING: Symbol(namer.resolve("app", "plugins", "loading")),
+  EV_PLUGINS_LOADED: Symbol(namer.resolve("app", "plugins", "loaded")),
+  EV_SERVER_STARTING: Symbol(namer.resolve("app", "server", "starting")),
+  EV_SERVER_STARTED: Symbol(namer.resolve("app", "server", "started")),
+  EV_SERVER_TURNING_OFF: Symbol(namer.resolve("app", "server", "turningOff")),
+  EV_SERVER_TURNED_OFF: Symbol(namer.resolve("app", "server", "turnedOff")),
+}
 
 export default class App extends Container {
-
-  private plugins: IPlugin[] = []
-  private schemas: string[] = []
-  private resolvers: object[] = []
-  private executableSchema: GraphQLSchema
+  public emitter = new EventEmitter()
+  private _plugins: { [key: string]: IPlugin } = {}
 
   constructor () {
     super()
-    this.addSchema(defaultSchema)
-    this.bind<Express>("server").toConstantValue(server)
+    this.bind<Express>(names.APP_SERVICE_EXPRESS).toConstantValue(express)
   }
 
   /*
   * adds a new plugin to the plugins array to initialize later
   * */
   public addPlugin (plugin: IPlugin) {
-    this.plugins.push(plugin)
+    this._plugins[plugin.name] = plugin
+  }
+
+  /*
+  * gets a plugin from plugins array
+  * */
+  public getPlugin (name: string): IPlugin {
+    return this._plugins[name]
   }
 
   /*
   * used to load all plugins
   * */
   public async load (): Promise<void> {
-    for (const plugin of this.plugins) {
-      await plugin.load(this)
+    for (let pluginName in this._plugins) {
+      await this._plugins[pluginName].load(this)
     }
   }
 
-  /*
-  * adds a schema partial to the schema partials that
-  * gets merged later to form the GraphQLSchema object
-  * */
-  public addSchema (schema: string): void {
-    this.schemas.push(schema)
-  }
+  public async start (): Promise<void> {
+    this.emitter.emit(names.EV_PLUGINS_LOADING, this)
+    await this.load()
+    this.emitter.emit(names.EV_PLUGINS_LOADED, this)
 
-  /*
-  * adds a resolver map object to the array of resolver
-  * map objects to be merged later into one resolver map
-  * */
-  public addResolvers (resolvers: object): void {
-    this.resolvers.push(resolvers)
-  }
-
-  /*
-  * loads the schema partials and resolvers from plugins
-  * */
-  public loadGraphQlFromPlugins (): void {
-    this.plugins.forEach(plugin => this.addSchema(plugin.getSchema()))
-    this.plugins.forEach(plugin => this.addResolvers(plugin.getResolvers()))
-  }
-
-  public getSchemas (): string[] {
-    return this.schemas
-  }
-
-  /*
-  * returns an array of resolver maps (plain object
-  * that holds resolvers)
-  * */
-  public getResolvers (): object[] {
-    return this.resolvers
-  }
-
-  /*
-  * generates a GraphQLSchema object out of loaded
-  * schema partials and resolvers
-  * */
-  getExecutableSchema (): GraphQLSchema {
-    if (this.executableSchema) return this.executableSchema
-    // generating new schema if not already generated
-    const resolvers = {}
-    this.getResolvers().forEach(resolver => merge(resolvers, resolver))
-    this.executableSchema = makeExecutableSchema({
-      typeDefs: this.getSchemas(),
-      resolvers: resolvers
+    const port = 8080
+    // emitting server-starting event
+    this.emitter.emit(names.EV_SERVER_STARTING, this)
+    const server = this.express.listen(port, (err: any) => {
+      // emitting server-started event
+      this.emitter.emit(names.EV_SERVER_STARTED, this)
     })
-    return this.executableSchema
+
+    this.bind<Server>(names.APP_SERVICE_SERVER).toConstantValue(server)
   }
 
-  public server (): Express {
-    return this.get("server")
+  public get express (): Express {
+    return this.get(names.APP_SERVICE_EXPRESS)
   }
 
-  public start (): void {
-    const port = this.config().value().http.port || 80
-
-    // The GraphQL endpoint
-    const schema = this.getExecutableSchema()
-    server.use('/graphql', bodyParser.json(), graphqlExpress({
-      schema,
-      rootValue: this
-    }))
-
-    // GraphiQL, a visual editor for queries
-    server.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
-
-
-    this.server().listen(port, () => {
-      console.log(`server is listening on port ${port} Go to http://localhost:${port}/graphiql to run queries!`)
-    })
+  public turnOff (): void {
+    this.emitter.emit(names.EV_SERVER_TURNING_OFF, this)
+    this.get<Server>(names.APP_SERVICE_SERVER).close()
+    this.emitter.emit(names.EV_SERVER_TURNED_OFF, this)
   }
 
   /*
   * returns the configuration container object
-  * @throw
   * */
   public config (): IConfiguration {
-    if (this.isBound('config')) {
-      return this.get('config')
+    if (this.isBound(names.APP_SERVICE_CONFIG)) {
+      return this.get(names.APP_SERVICE_CONFIG)
     } else {
       throw new Error('configuration object not yet loaded!')
     }
   }
-
 }

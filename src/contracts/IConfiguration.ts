@@ -1,3 +1,3 @@
-export default interface IConfiguration{
-  value (): any
+export default interface IConfiguration {
+  get (path: string): any
 }

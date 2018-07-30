@@ -18,17 +18,5 @@ export default interface IPlugin {
   * */
   load (container: App): Promise<void>
 
-  /*
-  * returns the GraphQl schema to merged with other schemas
-  * this method is requested by the app after init()
-  * */
-  getSchema (): string
-
-  /*
-  * returns resolvers for the given schema
-  * this method is requested by the app after getSchema()
-  * */
-  getResolvers (): object
-
 }
 

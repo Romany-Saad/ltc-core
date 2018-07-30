@@ -1,2 +1,2 @@
-declare const server: any;
-export default server;
+declare const express: any;
+export default express;
