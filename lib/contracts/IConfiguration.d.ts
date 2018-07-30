@@ -1,3 +1,3 @@
 export default interface IConfiguration {
-    value(): any;
+    get(path: string): any;
 }
