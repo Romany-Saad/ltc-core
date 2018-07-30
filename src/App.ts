@@ -33,20 +33,11 @@ export default class App extends Container {
   }
 
   /*
-  * used to register all plugins and services
+  * used to load all plugins
   * */
-  public async register (): Promise<void> {
+  public async load (): Promise<void> {
     for (const plugin of this.plugins) {
-      await plugin.register(this)
-    }
-  }
-
-  /*
-  * used to initialize plugins after registering them
-  * */
-  public async init (): Promise<void> {
-    for (const plugin of this.plugins) {
-      await plugin.init(this)
+      await plugin.load(this)
     }
   }
 

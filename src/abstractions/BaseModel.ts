@@ -1,7 +1,7 @@
 import { IModel, IStringKeyedObject } from "../contracts"
 import { isSerializable } from "../utils"
 import { Context } from "c2v"
-import { ITypeValidator, IValidationResult } from "c2v/lib/intefaces"
+import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
 
 export default abstract class BaseModel implements IModel {
   protected id: string = undefined

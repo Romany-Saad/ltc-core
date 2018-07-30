@@ -4,8 +4,7 @@ const App = require("../../lib/App").default;
 const app = new App();
 
 async function registerPluginsAndInitApp() {
-  await app.register();
-  await app.init();
+  await app.load();
   app.loadGraphQlFromPlugins();
   return app
 }
