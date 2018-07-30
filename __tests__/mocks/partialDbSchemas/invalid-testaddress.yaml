@@ -1,6 +1,0 @@
-$id: lattice.core:__tests__.partials.testaddress
-type: object
-# invalid line
-required: address
-properties:
-  address: {type: string, maxLength: 128}

@@ -1,7 +1,8 @@
+const Express = require('express')
 const cors = require("cors")
-const express = require('express')
-const server = express()
 
-server.use(cors())
+const express = Express()
 
-export default server
+express.use(cors())
+
+export default express
