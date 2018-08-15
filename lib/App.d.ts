@@ -20,7 +20,7 @@ export declare const names: {
     EV_DB_DELETED: symbol;
 };
 export default class App extends Container {
-    emitter: any;
+    readonly emitter: any;
     private _plugins;
     constructor();
     addPlugin(plugin: IPlugin): void;

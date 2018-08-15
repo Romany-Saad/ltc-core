@@ -5,8 +5,8 @@ import { Express } from "express"
 import express from "./express"
 import { namer } from "./utils"
 import { Server } from "http"
+import globalEventEmitter from "./Emitter"
 
-const EventEmitter = require("events")
 
 export const names = {
   APP_SERVICE_SERVER: Symbol(namer.resolve("app", "services", "server")),
@@ -27,7 +27,7 @@ export const names = {
 }
 
 export default class App extends Container {
-  public emitter = new EventEmitter()
+  public readonly emitter = globalEventEmitter
   private _plugins: { [key: string]: IPlugin } = {}
 
   constructor () {
