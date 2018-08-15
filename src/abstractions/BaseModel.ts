@@ -2,15 +2,19 @@ import { IModel, IStringKeyedObject } from "../contracts"
 import { isSerializable } from "../utils"
 import { Context } from "c2v"
 import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
+import { compare } from "fast-json-patch"
+import { merge, cloneDeep } from "lodash"
 
 export default abstract class BaseModel implements IModel {
   protected id: string = undefined
   protected data: IStringKeyedObject = {}
   protected schema: ITypeValidator = undefined
   protected state: IValidationResult = undefined
+  protected readonly initState: object
 
   constructor (data: IStringKeyedObject = undefined) {
-    this.set(data)
+    this.set(cloneDeep(data))
+    this.initState = this.serialize()
   }
 
   setId (id: string): void {
@@ -33,7 +37,7 @@ export default abstract class BaseModel implements IModel {
       serialized[key] = typeof value === "object" && isSerializable(value) ? value.serialize() : value
     })
 
-    return Object.assign({}, serialized)
+    return cloneDeep(serialized)
   }
 
   set (data: IStringKeyedObject): void {
@@ -41,12 +45,16 @@ export default abstract class BaseModel implements IModel {
       this.setId(data[this.getIdFieldName()])
       delete data[this.getIdFieldName()]
     }
-    this.data = Object.assign({}, this.data, data)
+    this.data = merge({}, this.data, data)
   }
 
   get (key: string): any {
     if (key === this.getIdFieldName()) return this.getId()
     return this.data[key]
+  }
+
+  getUpdatePatch (): Array<object> {
+    return compare(this.initState, this.serialize())
   }
 
   selfValidate (): Promise<IValidationResult> {

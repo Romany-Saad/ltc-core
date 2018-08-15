@@ -2,6 +2,7 @@ import { IStringKeyedObject, ISerializable } from "./"
 import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
 
 export default interface IModel extends ISerializable {
+
   /*
   * returns the name of the id field to be used in setId
   * */
@@ -20,6 +21,12 @@ export default interface IModel extends ISerializable {
   * return the value of `getId()`
   * */
   get (key: string): any
+
+  /*
+  * returns a json patch represents the diff between
+  * initState and serialize()
+  * */
+  getUpdatePatch (): Array<object>
 
   /*
   * sets the `id` property of the model and do any aside logic related to this operation

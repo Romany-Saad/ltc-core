@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { Container } from "inversify"
 import { IPlugin, IConfiguration } from "./contracts"
 import { Express } from "express"
-import express  from "./express"
+import express from "./express"
 import { namer } from "./utils"
 import { Server } from "http"
 
@@ -18,6 +18,12 @@ export const names = {
   EV_SERVER_STARTED: Symbol(namer.resolve("app", "server", "started")),
   EV_SERVER_TURNING_OFF: Symbol(namer.resolve("app", "server", "turningOff")),
   EV_SERVER_TURNED_OFF: Symbol(namer.resolve("app", "server", "turnedOff")),
+  EV_DB_INSERTING: Symbol(namer.resolve("app", "db", "inserting")),
+  EV_DB_INSERTED: Symbol(namer.resolve("app", "db", "inserted")),
+  EV_DB_UPDATING: Symbol(namer.resolve("app", "db", "updating")),
+  EV_DB_UPDATED: Symbol(namer.resolve("app", "db", "updated")),
+  EV_DB_DELETING: Symbol(namer.resolve("app", "db", "deleting")),
+  EV_DB_DELETED: Symbol(namer.resolve("app", "db", "deleted")),
 }
 
 export default class App extends Container {
@@ -57,12 +63,18 @@ export default class App extends Container {
     await this.load()
     this.emitter.emit(names.EV_PLUGINS_LOADED, this)
 
-    const port = 8080
+    const port = this.config().get("http.port") || 8080
+
     // emitting server-starting event
     this.emitter.emit(names.EV_SERVER_STARTING, this)
     const server = this.express.listen(port, (err: any) => {
-      // emitting server-started event
-      this.emitter.emit(names.EV_SERVER_STARTED, this)
+      if (!err) {
+        console.log(`server is listening to port ${port}`)
+        // emitting server-started event
+        this.emitter.emit(names.EV_SERVER_STARTED, this)
+      } else {
+        console.log(err)
+      }
     })
 
     this.bind<Server>(names.APP_SERVICE_SERVER).toConstantValue(server)

@@ -12,6 +12,12 @@ export declare const names: {
     EV_SERVER_STARTED: symbol;
     EV_SERVER_TURNING_OFF: symbol;
     EV_SERVER_TURNED_OFF: symbol;
+    EV_DB_INSERTING: symbol;
+    EV_DB_INSERTED: symbol;
+    EV_DB_UPDATING: symbol;
+    EV_DB_UPDATED: symbol;
+    EV_DB_DELETING: symbol;
+    EV_DB_DELETED: symbol;
 };
 export default class App extends Container {
     emitter: any;
