@@ -1,7 +1,9 @@
+/// <reference types="node" />
 import "reflect-metadata";
 import { Container } from "inversify";
 import { IPlugin, IConfiguration } from "./contracts";
 import { Express } from "express";
+import { EventEmitter } from "events";
 export declare const names: {
     APP_SERVICE_SERVER: symbol;
     APP_SERVICE_EXPRESS: symbol;
@@ -20,7 +22,7 @@ export declare const names: {
     EV_DB_DELETED: symbol;
 };
 export default class App extends Container {
-    readonly emitter: any;
+    readonly emitter: EventEmitter;
     private _plugins;
     constructor();
     addPlugin(plugin: IPlugin): void;

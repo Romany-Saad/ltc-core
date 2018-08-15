@@ -54,7 +54,13 @@ export default abstract class BaseModel implements IModel {
   }
 
   getUpdatePatch (): Array<object> {
-    return compare(this.initState, this.serialize())
+    const initState: any = this.initState
+    const currentState: any = this.serialize()
+
+    delete initState[this.getIdFieldName()]
+    delete currentState[this.getIdFieldName()]
+
+    return compare(initState, currentState)
   }
 
   selfValidate (): Promise<IValidationResult> {
