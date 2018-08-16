@@ -3,6 +3,8 @@ import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
 
 export default interface IModel extends ISerializable {
 
+  getDbState (): object
+
   /*
   * returns the name of the id field to be used in setId
   * */
@@ -21,6 +23,11 @@ export default interface IModel extends ISerializable {
   * return the value of `getId()`
   * */
   get (key: string): any
+
+  /*
+  * commits current model state to dbState
+  * */
+  updateDbState (): void
 
   /*
   * returns a json patch represents the diff between

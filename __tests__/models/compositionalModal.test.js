@@ -60,6 +60,7 @@ describe("CompositionModel is a model that extends BaseModel class", () => {
 
   it("should return a correct update patch", async () => {
     const x = new CompositionModel({ user: { firstName: "Albert", lastName: "Einstein" } });
+    x.updateDbState();
     x.set({ user: { lastName: "Collins" } });
 
     expect(x.getUpdatePatch()).toEqual([

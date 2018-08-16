@@ -10,23 +10,18 @@ export default abstract class BaseModel implements IModel {
   protected data: IStringKeyedObject = {}
   protected schema: ITypeValidator = undefined
   protected state: IValidationResult = undefined
-  protected readonly initState: object
+  protected dbState: object = {}
 
   constructor (data: IStringKeyedObject = undefined) {
     this.set(cloneDeep(data))
-    this.initState = this.serialize()
   }
 
-  setId (id: string): void {
-    this.id = id
+  getDbState (): object {
+    return cloneDeep(this.dbState)
   }
 
-  getId (): string {
-    return this.id
-  }
-
-  getIdFieldName (): string {
-    return "_id"
+  updateDbState (): void {
+    this.dbState = this.serialize()
   }
 
   serialize (): IStringKeyedObject {
@@ -53,8 +48,20 @@ export default abstract class BaseModel implements IModel {
     return this.data[key]
   }
 
+  getIdFieldName (): string {
+    return "_id"
+  }
+
+  setId (id: string): void {
+    this.id = id
+  }
+
+  getId (): string {
+    return this.id
+  }
+
   getUpdatePatch (): Array<object> {
-    const initState: any = this.initState
+    const initState: any = this.dbState
     const currentState: any = this.serialize()
 
     delete initState[this.getIdFieldName()]
