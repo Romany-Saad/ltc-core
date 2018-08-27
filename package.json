@@ -24,8 +24,8 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "faker": "^4.1.0",
-    "fast-json-patch": "^2.0.6",
     "inversify": "^4.11.1",
+    "json8-patch": "^0.4.1",
     "lodash": "^4.17.5",
     "reflect-metadata": "^0.1.12"
   },

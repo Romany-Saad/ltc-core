@@ -2,8 +2,9 @@ import { IModel, IStringKeyedObject } from "../contracts"
 import { isSerializable } from "../utils"
 import { Context } from "c2v"
 import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
-import { compare } from "fast-json-patch"
 import { merge, cloneDeep } from "lodash"
+
+const ooPatch = require('json8-patch');
 
 export default abstract class BaseModel implements IModel {
   protected id: string = undefined
@@ -60,14 +61,19 @@ export default abstract class BaseModel implements IModel {
     return this.id
   }
 
-  getUpdatePatch (): Array<object> {
+  getUpdatePatch (): object {
     const initState: any = this.dbState
     const currentState: any = this.serialize()
 
     delete initState[this.getIdFieldName()]
     delete currentState[this.getIdFieldName()]
 
-    return compare(initState, currentState)
+    let patch = ooPatch.diff(initState, currentState);
+    let reverse = ooPatch.diff(currentState, initState);
+    return {
+      patch: patch,
+      reversePatch: reverse
+    }
   }
 
   selfValidate (): Promise<IValidationResult> {

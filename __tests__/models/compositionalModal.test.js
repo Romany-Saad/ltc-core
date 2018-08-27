@@ -63,8 +63,15 @@ describe("CompositionModel is a model that extends BaseModel class", () => {
     x.updateDbState();
     x.set({ user: { lastName: "Collins" } });
 
-    expect(x.getUpdatePatch()).toEqual([
-      { op: "replace", path: "/user/lastName", value: "Collins" },
-    ]);
+    let res = x.getUpdatePatch()
+    console.log(res)
+    expect(x.getUpdatePatch()).toEqual({
+        patch: [
+            { op: "replace", path: "/user/lastName", value: "Collins" }
+        ],
+        reversePatch: [
+            { op: "replace", path: "/user/lastName", value: "Einstein" }
+        ]
+    });
   });
 });

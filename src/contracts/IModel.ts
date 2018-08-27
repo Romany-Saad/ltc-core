@@ -33,7 +33,7 @@ export default interface IModel extends ISerializable {
   * returns a json patch represents the diff between
   * initState and serialize()
   * */
-  getUpdatePatch (): Array<object>
+  getUpdatePatch (): object
 
   /*
   * sets the `id` property of the model and do any aside logic related to this operation

@@ -15,7 +15,7 @@ export default abstract class BaseModel implements IModel {
     getIdFieldName(): string;
     setId(id: string): void;
     getId(): string;
-    getUpdatePatch(): Array<object>;
+    getUpdatePatch(): object;
     selfValidate(): Promise<IValidationResult>;
     getResult(): IValidationResult;
     getSchema(): ITypeValidator;

@@ -6,7 +6,7 @@ export default interface IModel extends ISerializable {
     set(data: IStringKeyedObject): void;
     get(key: string): any;
     updateDbState(): void;
-    getUpdatePatch(): Array<object>;
+    getUpdatePatch(): object;
     setId(id: string): void;
     getId(): string;
     getSchema(): ITypeValidator;
