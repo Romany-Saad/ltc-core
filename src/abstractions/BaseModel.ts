@@ -38,7 +38,13 @@ export default abstract class BaseModel implements IModel {
 
   set (data: IStringKeyedObject): void {
     if (data && data[this.getIdFieldName()]) {
-      this.setId(data[this.getIdFieldName()])
+      let id;
+      if (typeof data[this.getIdFieldName()] === 'string') {
+          id = data[this.getIdFieldName()]
+      } else {
+          id = data[this.getIdFieldName()].toString()
+      }
+      this.setId(id)
       delete data[this.getIdFieldName()]
     }
     this.data = merge({}, this.data, data)
