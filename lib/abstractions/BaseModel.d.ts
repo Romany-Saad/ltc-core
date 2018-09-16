@@ -1,5 +1,5 @@
-import { IModel, IStringKeyedObject } from "../contracts";
-import { ITypeValidator, IValidationResult } from "c2v/lib/contracts";
+import { IModel, IStringKeyedObject } from '../contracts';
+import { ITypeValidator, IValidationResult } from 'c2v/lib/contracts';
 export default abstract class BaseModel implements IModel {
     protected id: string;
     protected data: IStringKeyedObject;

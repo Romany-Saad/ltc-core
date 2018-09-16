@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import "reflect-metadata";
-import { Container } from "inversify";
-import { IPlugin, IConfiguration } from "./contracts";
-import { Express } from "express";
-import { EventEmitter } from "events";
+import 'reflect-metadata';
+import { Container } from 'inversify';
+import { IPlugin, IConfiguration } from './contracts';
+import { Express } from 'express';
+import { EventEmitter } from 'events';
 export declare const names: {
     APP_SERVICE_SERVER: symbol;
     APP_SERVICE_EXPRESS: symbol;

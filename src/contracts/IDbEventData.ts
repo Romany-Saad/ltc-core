@@ -1,6 +1,6 @@
-import IModel from "./IModel";
+import IModel from './IModel'
 
 export interface IDbEventData {
-    collectionName: string
-    items: Array<IModel>
+  collectionName: string
+  items: Array<IModel>
 }

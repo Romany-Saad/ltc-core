@@ -1,30 +1,30 @@
-import "reflect-metadata"
-import { Container } from "inversify"
-import { IPlugin, IConfiguration } from "./contracts"
-import { Express } from "express"
-import express from "./express"
-import { namer } from "./utils"
-import { Server } from "http"
-import globalEventEmitter from "./Emitter"
-import { EventEmitter } from "events"
+import 'reflect-metadata'
+import { Container } from 'inversify'
+import { IPlugin, IConfiguration } from './contracts'
+import { Express } from 'express'
+import express from './express'
+import { namer } from './utils'
+import { Server } from 'http'
+import globalEventEmitter from './Emitter'
+import { EventEmitter } from 'events'
 
 
 export const names = {
-  APP_SERVICE_SERVER: Symbol(namer.resolve("app", "services", "server")),
-  APP_SERVICE_EXPRESS: Symbol(namer.resolve("app", "services", "express")),
-  APP_SERVICE_CONFIG: Symbol(namer.resolve("app", "services", "config")),
-  EV_PLUGINS_LOADING: Symbol(namer.resolve("app", "plugins", "loading")),
-  EV_PLUGINS_LOADED: Symbol(namer.resolve("app", "plugins", "loaded")),
-  EV_SERVER_STARTING: Symbol(namer.resolve("app", "server", "starting")),
-  EV_SERVER_STARTED: Symbol(namer.resolve("app", "server", "started")),
-  EV_SERVER_TURNING_OFF: Symbol(namer.resolve("app", "server", "turningOff")),
-  EV_SERVER_TURNED_OFF: Symbol(namer.resolve("app", "server", "turnedOff")),
-  EV_DB_INSERTING: Symbol(namer.resolve("app", "db", "inserting")),
-  EV_DB_INSERTED: Symbol(namer.resolve("app", "db", "inserted")),
-  EV_DB_UPDATING: Symbol(namer.resolve("app", "db", "updating")),
-  EV_DB_UPDATED: Symbol(namer.resolve("app", "db", "updated")),
-  EV_DB_DELETING: Symbol(namer.resolve("app", "db", "deleting")),
-  EV_DB_DELETED: Symbol(namer.resolve("app", "db", "deleted")),
+  APP_SERVICE_SERVER: Symbol(namer.resolve('app', 'services', 'server')),
+  APP_SERVICE_EXPRESS: Symbol(namer.resolve('app', 'services', 'express')),
+  APP_SERVICE_CONFIG: Symbol(namer.resolve('app', 'services', 'config')),
+  EV_PLUGINS_LOADING: Symbol(namer.resolve('app', 'plugins', 'loading')),
+  EV_PLUGINS_LOADED: Symbol(namer.resolve('app', 'plugins', 'loaded')),
+  EV_SERVER_STARTING: Symbol(namer.resolve('app', 'server', 'starting')),
+  EV_SERVER_STARTED: Symbol(namer.resolve('app', 'server', 'started')),
+  EV_SERVER_TURNING_OFF: Symbol(namer.resolve('app', 'server', 'turningOff')),
+  EV_SERVER_TURNED_OFF: Symbol(namer.resolve('app', 'server', 'turnedOff')),
+  EV_DB_INSERTING: Symbol(namer.resolve('app', 'db', 'inserting')),
+  EV_DB_INSERTED: Symbol(namer.resolve('app', 'db', 'inserted')),
+  EV_DB_UPDATING: Symbol(namer.resolve('app', 'db', 'updating')),
+  EV_DB_UPDATED: Symbol(namer.resolve('app', 'db', 'updated')),
+  EV_DB_DELETING: Symbol(namer.resolve('app', 'db', 'deleting')),
+  EV_DB_DELETED: Symbol(namer.resolve('app', 'db', 'deleted')),
 }
 
 export default class App extends Container {
@@ -54,17 +54,17 @@ export default class App extends Container {
   * used to load all plugins
   * */
   public async load (): Promise<void> {
+    this.emitter.emit(names.EV_PLUGINS_LOADING, this)
     for (let pluginName in this._plugins) {
       await this._plugins[pluginName].load(this)
     }
+    this.emitter.emit(names.EV_PLUGINS_LOADED, this)
   }
 
   public async start (): Promise<void> {
-    this.emitter.emit(names.EV_PLUGINS_LOADING, this)
     await this.load()
-    this.emitter.emit(names.EV_PLUGINS_LOADED, this)
 
-    const port = this.config().get("http.port") || 8080
+    const port = this.config().get('http.port') || 8080
 
     // emitting server-starting event
     this.emitter.emit(names.EV_SERVER_STARTING, this)

@@ -1,10 +1,10 @@
-import { IModel, IStringKeyedObject } from "../contracts"
-import { isSerializable } from "../utils"
-import { Context } from "c2v"
-import { ITypeValidator, IValidationResult } from "c2v/lib/contracts"
-import { merge, cloneDeep } from "lodash"
+import { IModel, IStringKeyedObject } from '../contracts'
+import { isSerializable } from '../utils'
+import { Context } from 'c2v'
+import { ITypeValidator, IValidationResult } from 'c2v/lib/contracts'
+import { merge, cloneDeep } from 'lodash'
 
-const ooPatch = require('json8-patch');
+const ooPatch = require('json8-patch')
 
 export default abstract class BaseModel implements IModel {
   protected id: string = undefined
@@ -30,7 +30,7 @@ export default abstract class BaseModel implements IModel {
     serialized[this.getIdFieldName()] = this.getId()
     Object.keys(this.data).forEach((key) => {
       const value = this.data[key]
-      serialized[key] = typeof value === "object" && isSerializable(value) ? value.serialize() : value
+      serialized[key] = typeof value === 'object' && isSerializable(value) ? value.serialize() : value
     })
 
     return cloneDeep(serialized)
@@ -38,11 +38,11 @@ export default abstract class BaseModel implements IModel {
 
   set (data: IStringKeyedObject): void {
     if (data && data[this.getIdFieldName()]) {
-      let id;
+      let id
       if (typeof data[this.getIdFieldName()] === 'string') {
-          id = data[this.getIdFieldName()]
+        id = data[this.getIdFieldName()]
       } else {
-          id = data[this.getIdFieldName()].toString()
+        id = data[this.getIdFieldName()].toString()
       }
       this.setId(id)
       delete data[this.getIdFieldName()]
@@ -56,7 +56,7 @@ export default abstract class BaseModel implements IModel {
   }
 
   getIdFieldName (): string {
-    return "_id"
+    return '_id'
   }
 
   setId (id: string): void {
@@ -74,11 +74,11 @@ export default abstract class BaseModel implements IModel {
     delete initState[this.getIdFieldName()]
     delete currentState[this.getIdFieldName()]
 
-    let patch = ooPatch.diff(initState, currentState);
-    let reverse = ooPatch.diff(currentState, initState);
+    let patch = ooPatch.diff(initState, currentState)
+    let reverse = ooPatch.diff(currentState, initState)
     return {
       patch: patch,
-      reversePatch: reverse
+      reversePatch: reverse,
     }
   }
 
