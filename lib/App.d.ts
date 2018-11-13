@@ -32,16 +32,16 @@ export default class App extends Container {
      * */
     readonly resourceMapper: ResourceMapper;
     /**
-    * adds a new plugin to the plugins array to initialize later
-    * */
+     * adds a new plugin to the plugins array to initialize later
+     * */
     addPlugin(plugin: IPlugin): void;
     /**
-    * gets a plugin from plugins array
-    * */
+     * gets a plugin from plugins array
+     * */
     getPlugin(name: string): IPlugin;
     /**
-    * used to load all plugins
-    * */
+     * used to load all plugins
+     * */
     load(): Promise<void>;
     start(): Promise<void>;
     readonly express: Express;

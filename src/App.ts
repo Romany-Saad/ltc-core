@@ -46,37 +46,35 @@ export default class App extends Container {
   }
 
   /**
-  * adds a new plugin to the plugins array to initialize later
-  * */
+   * adds a new plugin to the plugins array to initialize later
+   * */
   public addPlugin (plugin: IPlugin) {
+    if (plugin.name.trim().length < 1)
+      throw new Error(`plugin doesn't hold a valid name property.`)
+
+    if (this._plugins.hasOwnProperty(plugin.name))
+      throw new Error(`a plugin with the same name ${plugin.name} already exists.`)
+
     this._plugins[plugin.name] = plugin
   }
 
   /**
-  * gets a plugin from plugins array
-  * */
+   * gets a plugin from plugins array
+   * */
   public getPlugin (name: string): IPlugin {
     return this._plugins[name]
   }
 
   /**
-  * used to load all plugins
-  * */
+   * used to load all plugins
+   * */
   public async load (): Promise<void> {
-    this.emitter.emit(names.EV_PLUGINS_LOADING, this);
-    let unique: any = [];
+    this.emitter.emit(names.EV_PLUGINS_LOADING, this)
+
     for (let pluginName in this._plugins) {
-        if (this._plugins[pluginName].hasOwnProperty('name')) {
-          if (unique.indexOf(this._plugins[pluginName].name) === -1) {
-              unique.push(this._plugins[pluginName].name);
-              await this._plugins[pluginName].load(this)
-          } else {
-              throw new Error("Plugins' names must be unique.")
-          }
-      } else {
-        throw new Error("Plugin doesn't have a name property.")
-      }
+      await this._plugins[pluginName].load(this)
     }
+
     this.emitter.emit(names.EV_PLUGINS_LOADED, this)
   }
 
