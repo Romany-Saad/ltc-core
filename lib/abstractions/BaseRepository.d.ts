@@ -1,8 +1,8 @@
 import IRepository from "../contracts/IRepository";
 import IStringKeyedObject from "../contracts/IStringKeyedObject";
 export default abstract class BaseRepository<T> implements IRepository<T> {
-    protected static _collectionName: string;
-    static readonly collectionName: string;
+    protected _directoryName: string;
+    readonly directoryName: string;
     abstract find(query: object, limit: number, skip: number): Promise<T[]>;
     abstract findByIds(ids: string[]): Promise<T[]>;
     abstract count(query: object): Promise<number>;

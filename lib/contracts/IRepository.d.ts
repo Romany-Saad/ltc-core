@@ -1,5 +1,6 @@
-import IStringKeyedObject from "./IStringKeyedObject";
+import IStringKeyedObject from './IStringKeyedObject';
 export default interface IRepository<T> {
+    directoryName: string;
     insert(items: T[]): Promise<T[]>;
     find(query: object, limit: number, skip: number): Promise<T[]>;
     count(query: object): Promise<number>;

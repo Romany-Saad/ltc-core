@@ -1,12 +1,13 @@
 import 'reflect-metadata'
 import { Container } from 'inversify'
-import { IPlugin, IConfiguration } from './contracts'
+import { IConfiguration, IPlugin } from './contracts'
 import { Express } from 'express'
 import express from './express'
 import { namer } from './utils'
 import { Server } from 'http'
 import globalEventEmitter from './Emitter'
 import { EventEmitter } from 'events'
+import ResourceMapper from './classes/ResourceMapper'
 
 
 export const names = {
@@ -30,27 +31,35 @@ export const names = {
 export default class App extends Container {
   public readonly emitter: EventEmitter = globalEventEmitter
   private _plugins: { [key: string]: IPlugin } = {}
+  private _resourceMapper: ResourceMapper = new ResourceMapper()
 
   constructor () {
     super()
     this.bind<Express>(names.APP_SERVICE_EXPRESS).toConstantValue(express)
   }
 
-  /*
+  /**
+   * retrieves the resource mapper object
+   * */
+  public get resourceMapper (): ResourceMapper {
+    return this._resourceMapper
+  }
+
+  /**
   * adds a new plugin to the plugins array to initialize later
   * */
   public addPlugin (plugin: IPlugin) {
     this._plugins[plugin.name] = plugin
   }
 
-  /*
+  /**
   * gets a plugin from plugins array
   * */
   public getPlugin (name: string): IPlugin {
     return this._plugins[name]
   }
 
-  /*
+  /**
   * used to load all plugins
   * */
   public async load (): Promise<void> {

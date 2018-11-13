@@ -1,9 +1,10 @@
 /// <reference types="node" />
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { IPlugin, IConfiguration } from './contracts';
+import { IConfiguration, IPlugin } from './contracts';
 import { Express } from 'express';
 import { EventEmitter } from 'events';
+import ResourceMapper from './classes/ResourceMapper';
 export declare const names: {
     APP_SERVICE_SERVER: symbol;
     APP_SERVICE_EXPRESS: symbol;
@@ -24,9 +25,23 @@ export declare const names: {
 export default class App extends Container {
     readonly emitter: EventEmitter;
     private _plugins;
+    private _resourceMapper;
     constructor();
+    /**
+     * retrieves the resource mapper object
+     * */
+    readonly resourceMapper: ResourceMapper;
+    /**
+    * adds a new plugin to the plugins array to initialize later
+    * */
     addPlugin(plugin: IPlugin): void;
+    /**
+    * gets a plugin from plugins array
+    * */
     getPlugin(name: string): IPlugin;
+    /**
+    * used to load all plugins
+    * */
     load(): Promise<void>;
     start(): Promise<void>;
     readonly express: Express;

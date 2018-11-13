@@ -3,12 +3,12 @@ import IStringKeyedObject from "../contracts/IStringKeyedObject"
 
 export default abstract class BaseRepository<T> implements IRepository<T> {
 
-  protected static _collectionName: string
+  protected _directoryName: string
 
-  public static get collectionName (): string {
-    if (!this._collectionName || this._collectionName.trim().length < 1)
-      throw new Error('collection name is not set')
-    return this._collectionName
+  public get directoryName (): string {
+    if (!this._directoryName || this._directoryName.trim().length < 1)
+      throw new Error('directory name is not set or empty')
+    return this._directoryName
   }
 
   abstract find (query: object, limit: number, skip: number): Promise<T[]>

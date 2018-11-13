@@ -1,6 +1,8 @@
-import IStringKeyedObject from "./IStringKeyedObject"
+import IStringKeyedObject from './IStringKeyedObject'
 
 export default interface IRepository<T> {
+
+  directoryName : string
 
   /*
   * inserts a set of items into collection
