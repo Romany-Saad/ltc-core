@@ -63,9 +63,19 @@ export default class App extends Container {
   * used to load all plugins
   * */
   public async load (): Promise<void> {
-    this.emitter.emit(names.EV_PLUGINS_LOADING, this)
+    this.emitter.emit(names.EV_PLUGINS_LOADING, this);
+    let unique: any = [];
     for (let pluginName in this._plugins) {
-      await this._plugins[pluginName].load(this)
+        if (this._plugins[pluginName].hasOwnProperty('name')) {
+          if (unique.indexOf(this._plugins[pluginName].name) === -1) {
+              unique.push(this._plugins[pluginName].name);
+              await this._plugins[pluginName].load(this)
+          } else {
+              throw new Error("Plugins' names must be unique.")
+          }
+      } else {
+        throw new Error("Plugin doesn't have a name property.")
+      }
     }
     this.emitter.emit(names.EV_PLUGINS_LOADED, this)
   }
