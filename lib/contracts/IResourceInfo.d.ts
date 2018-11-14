@@ -3,7 +3,7 @@ export default interface IResourceInfo {
     /**
      * the unique resource name
      * */
-    resourceName: string | symbol;
+    resourceName: string;
     /**
      * keeps reference to resource's repository instance
      * */

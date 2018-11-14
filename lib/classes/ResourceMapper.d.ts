@@ -1,7 +1,7 @@
 import IResourceInfo from '../contracts/IResourceInfo';
 export default class ResourceMapper {
-    private resourcesInfo;
+    private resources;
     addResourceInfo(resourceInfo: IResourceInfo): void;
-    mapResourceByName(name: string | symbol): IResourceInfo;
+    mapResourceByName(name: string): IResourceInfo;
     mapResourceByDirectoryName(name: string): IResourceInfo;
 }
