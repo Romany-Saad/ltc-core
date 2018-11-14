@@ -64,7 +64,6 @@ describe("CompositionModel is a model that extends BaseModel class", () => {
     x.set({ user: { lastName: "Collins" } });
 
     let res = x.getUpdatePatch()
-    console.log(res)
     expect(x.getUpdatePatch()).toEqual({
         patch: [
             { op: "replace", path: "/user/lastName", value: "Collins" }
