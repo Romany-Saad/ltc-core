@@ -1,8 +1,8 @@
 import IModel from './IModel'
 
 export default interface IDbOperationData {
-  operationType: symbol
-  resourceName: string
+  operationType: string | symbol
+  resourceName: string | symbol
   affectedItems: Array<IModel>
   meta?: any
 }

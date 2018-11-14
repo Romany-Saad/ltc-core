@@ -5,11 +5,11 @@ export default class ResourceMapper {
 
   public addResourceInfo (resourceInfo: IResourceInfo): void {
     if (this.resourcesInfo.findIndex(ri => ri.resourceName === resourceInfo.resourceName) >= 0)
-      throw new Error(`resource with the name ${resourceInfo.resourceName} already exists`)
+      throw new Error(`resource with the name ${resourceInfo.resourceName.toString()} already exists`)
     this.resourcesInfo.push(resourceInfo)
   }
 
-  public mapResourceByName (name: string): IResourceInfo {
+  public mapResourceByName (name: string | symbol): IResourceInfo {
     return this.resourcesInfo.find(ri => ri.resourceName === name)
   }
 
