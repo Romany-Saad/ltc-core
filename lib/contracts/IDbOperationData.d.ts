@@ -1,6 +1,6 @@
 import IModel from './IModel';
-export default interface IDbOperationEvent {
-    operationName: string;
+export default interface IDbOperationData {
+    operationType: symbol;
     resourceName: string;
     affectedItems: Array<IModel>;
     meta?: any;

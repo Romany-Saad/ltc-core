@@ -4,4 +4,8 @@ import * as utils from './utils/index'
 
 export { default as emitter } from './Emitter'
 export { names, contracts, utils }
+
+export * from './contracts'
+
+
 export default App
