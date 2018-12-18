@@ -12,7 +12,7 @@ export default interface IRepository<T> {
   /*
   * query the collection to find a set of items
   * */
-  find (query: object, limit: number, skip: number): Promise<T[]>
+  find (query: object, limit: number, skip: number, sort: object): Promise<T[]>
 
   /*
   * counts all items matching a certain criteria
