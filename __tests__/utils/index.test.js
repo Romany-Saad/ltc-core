@@ -1,4 +1,5 @@
-const { isSerializable } = require("../../lib/utils");
+
+const { isSerializable, merge } = require("../../lib/utils");
 
 describe(`isSerializable is a function that checks 
 if a given object has serialize method or not`, () => {
@@ -28,5 +29,13 @@ if a given object has serialize method or not`, () => {
 
   it("should return false on null", () => {
     expect(isSerializable(null)).toBe(false);
+  });
+
+  it("should merge 2 or more objects", () => {
+    let obj1 = {a: 1, b: 2, c: 3}
+    let obj2 = {a: 1, b: 2, d: 3, c: 4}
+    let obj3 = {a: 3, b: 2, d: 3, c: 4}
+    let merged = merge(obj1, obj2, obj3)
+    expect(merged).toEqual({a: 3, b: 2, d: 3, c: 4});
   });
 });

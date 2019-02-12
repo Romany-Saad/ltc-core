@@ -11,4 +11,12 @@ class namer {
   }
 }
 
-export { namer }
+const merge = (...items: Array<any>) => {
+  let result =  {}
+  for (let item of items) {
+    result = {...item}
+  }
+  return result
+}
+
+export { namer, merge }
