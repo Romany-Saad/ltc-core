@@ -12,9 +12,9 @@ class namer {
 }
 
 const merge = (...items: Array<any>) => {
-  let result =  {}
+  let result = {}
   for (let item of items) {
-    result = {...item}
+    result = { ...result, ...item }
   }
   return result
 }
