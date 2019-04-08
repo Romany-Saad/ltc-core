@@ -27,7 +27,8 @@
     "inversify": "^4.11.1",
     "json8-patch": "^0.4.1",
     "lodash": "^4.17.5",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.12",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "jest": "^22.4.3",
