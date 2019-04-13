@@ -1,4 +1,2 @@
-/// <reference types="node" />
-import { EventEmitter } from "events";
-declare const globalEventEmitter: EventEmitter;
+declare const globalEventEmitter: any;
 export default globalEventEmitter;
