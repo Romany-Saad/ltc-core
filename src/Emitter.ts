@@ -1,5 +1,5 @@
-import { EventEmitter } from "events"
+const AsyncEventEmitter = require('async-eventemitter')
 
-const globalEventEmitter = new EventEmitter()
+const globalEventEmitter = new AsyncEventEmitter()
 
 export default globalEventEmitter
