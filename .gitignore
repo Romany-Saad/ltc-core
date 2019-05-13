@@ -4,3 +4,5 @@ coverage/
 package-lock.json
 yarn-error.log
 yarn.lock
+combined.log
+exceptions.log

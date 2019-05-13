@@ -1,3 +1,4 @@
+const logger = require('../lib/utils/logging').logger
 const registerPluginsAndInitApp = require('./mocks/app')
 const {names} = require('../lib/App')
 const express = require('express')
@@ -6,6 +7,11 @@ const {default: ResourceMapper} = require('../lib/classes/ResourceMapper')
 let app
 beforeAll(async () => {
   app = await registerPluginsAndInitApp()
+  logger.log({
+    level: 'info',
+    message: 'something',
+    error: {t: 'the real one'},
+  })
 })
 
 // todo: test App.addPlugin method
