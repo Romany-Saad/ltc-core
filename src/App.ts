@@ -26,6 +26,7 @@ export const names = {
   EV_DB_UPDATED: Symbol(namer.resolve('app', 'db', 'updated')),
   EV_DB_DELETING: Symbol(namer.resolve('app', 'db', 'deleting')),
   EV_DB_DELETED: Symbol(namer.resolve('app', 'db', 'deleted')),
+  EV_MODEL_VALIDATING: Symbol(namer.resolve('app', 'model', 'validating')),
 }
 
 export default class App extends Container {

@@ -20,6 +20,7 @@ export declare const names: {
     EV_DB_UPDATED: symbol;
     EV_DB_DELETING: symbol;
     EV_DB_DELETED: symbol;
+    EV_MODEL_VALIDATING: symbol;
 };
 export default class App extends Container {
     readonly emitter: EventEmitter;
