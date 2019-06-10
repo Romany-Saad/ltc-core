@@ -3,6 +3,7 @@ import { isSerializable, merge } from '../utils'
 import { Context } from 'c2v'
 import { ITypeValidator, IValidationResult } from 'c2v/lib/contracts'
 import { cloneDeep } from 'lodash'
+import { emitter, names } from '../index'
 
 const ooPatch = require('json8-patch')
 
@@ -83,6 +84,7 @@ export default abstract class BaseModel implements IModel {
   }
 
   selfValidate (): Promise<IValidationResult> {
+    emitter.emit(names.EV_MODEL_VALIDATING, this)
     const validation = Context.validate(this.getSchema(), this.serialize())
     try {
       return validation
