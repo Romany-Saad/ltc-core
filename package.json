@@ -1,5 +1,5 @@
 {
-  "name": "@lattice/core",
+  "name": "@cyber-crafts/ltc-core",
   "version": "1.0.0",
   "main": "./lib/index",
   "typings": "./lib/index",
