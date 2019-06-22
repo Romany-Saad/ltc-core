@@ -8,10 +8,10 @@ import { emitter, names } from '../index'
 const ooPatch = require('json8-patch')
 
 export default abstract class BaseModel implements IModel {
+
   protected id: string = undefined
   protected data: IStringKeyedObject = {}
   protected schema: ITypeValidator = undefined
-  protected state: IValidationResult = undefined
   protected dbState: object = {}
 
   constructor (data: IStringKeyedObject = undefined) {
@@ -85,18 +85,7 @@ export default abstract class BaseModel implements IModel {
 
   selfValidate (): Promise<IValidationResult> {
     emitter.emit(names.EV_MODEL_VALIDATING, this)
-    const validation = Context.validate(this.getSchema(), this.serialize())
-    try {
-      return validation
-    } finally {
-      validation.then((result: IValidationResult) => {
-        this.state = result
-      })
-    }
-  }
-
-  getResult (): IValidationResult {
-    return this.state
+    return Context.validate(this.getSchema(), this.serialize())
   }
 
   getSchema (): ITypeValidator {

@@ -2,12 +2,7 @@
 ## App
 this is the main class that is used to glue all the plugins together
 into one application, it handles the registration and initialization of
-plugins and [merges the GraphQl Schemas](#app-getExecutableSchema)
-from all plugins
-
-### `App.getExecutableSchema(): GraphQLSchema`
-merges all schemas and resolvers from all plugins and returns an
-instance of `GraphQLSchema`
+plugins and interchanging services between plugins.
 
 # Contracts
 contracts are just interfaces but we use the term contract just to make
@@ -18,7 +13,7 @@ meanings
 
 ### Methods
 
-#### `serialize(model: IModel): object`
+#### `serialize(): IStringKeyedObject`
 serializes a given IModel instance into a plain JS object
 
 ## `IModel`
@@ -49,9 +44,18 @@ returns the model `id` property
 #### `getSchema (): IStringKeyedObject`
 returns the schema used to validate the state of the model
 
-#### `selfValidate (): boolean`
+#### `selfValidate (): Promise<IValidationResult>`
 validates the value returned from IModel.serialize() against
 the model's schema
 
-#### `getErrors (): object`
-returns an array of errors that resulted from the last validation
+# Decorators
+decorators are utility functions that are used to enhance or alter the behaviour of classes or methods
+
+## Model Decorators
+### `@computed` (accessor decorator)
+used to mark a property accessor as a computed property field to be included in returned value of `IModel.serialize()`
+* 
+
+
+### `@timestamped` (class decorator)
+decorator to add auto-calculated model auditing properties [`createdAt`, `updatedAt`]

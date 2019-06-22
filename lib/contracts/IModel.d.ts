@@ -11,5 +11,4 @@ export default interface IModel extends ISerializable {
     getId(): string;
     getSchema(): ITypeValidator;
     selfValidate(): Promise<IValidationResult>;
-    getResult(): IValidationResult;
 }

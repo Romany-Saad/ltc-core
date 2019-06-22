@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import 'reflect-metadata';
 import { Container } from 'inversify';
 import { IConfiguration, IPlugin } from './contracts';

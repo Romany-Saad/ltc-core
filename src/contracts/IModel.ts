@@ -56,8 +56,4 @@ export default interface IModel extends ISerializable {
   * */
   selfValidate (): Promise<IValidationResult>
 
-  /*
-  * returns the result of last validation
-  * */
-  getResult (): IValidationResult
 }

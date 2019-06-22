@@ -4,7 +4,6 @@ export default abstract class BaseModel implements IModel {
     protected id: string;
     protected data: IStringKeyedObject;
     protected schema: ITypeValidator;
-    protected state: IValidationResult;
     protected dbState: object;
     constructor(data?: IStringKeyedObject);
     getDbState(): object;
@@ -17,6 +16,5 @@ export default abstract class BaseModel implements IModel {
     getId(): string;
     getUpdatePatch(): object;
     selfValidate(): Promise<IValidationResult>;
-    getResult(): IValidationResult;
     getSchema(): ITypeValidator;
 }
