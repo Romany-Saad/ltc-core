@@ -3,8 +3,9 @@ const registerPluginsAndInitApp = require('./mocks/app')
 const {names} = require('../lib/App')
 const express = require('express')
 const {default: ResourceMapper} = require('../lib/classes/ResourceMapper')
+const memoize = require('./../lib/index').memoize
 
-let app
+let app, fn
 beforeAll(async () => {
   app = await registerPluginsAndInitApp()
   logger.log({
@@ -22,6 +23,26 @@ describe('given an instance of App', () => {
     expect(s.constructor.toString()).toBe(express().constructor.toString())
     expect(s).toHaveProperty('post')
     expect(s).toHaveProperty('listen')
+  })
+
+  it('should test memoizee', () => {
+    let counter = 0
+    const fn = (x, y) => {
+      counter++
+      return x + y
+    }
+    const memoized = memoize(
+      function (x, y) {
+        return fn(1, 2)
+      },
+      {
+        primitive: true,
+      },
+    )
+    expect(memoized(1, 2)).toBe(3)
+    expect(counter).toBe(1)
+    memoized(1, 2)
+    expect(counter).toBe(1)
   })
 
   it('should throw an error when asked for a config while no config plugin is loaded', () => {
