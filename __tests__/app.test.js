@@ -53,4 +53,10 @@ describe('given an instance of App', () => {
   it('should return a Resource Mapper instance ', () => {
     expect(app.resourceMapper).toBeInstanceOf(ResourceMapper)
   })
+
+  it('should return a set of plugins on getPlugins()', () => {
+    const plugins = app.getPlugins()
+    console.log(plugins)
+    expect(plugins).toEqual({})
+  })
 })

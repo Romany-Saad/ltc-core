@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import 'reflect-metadata';
 import { Container } from 'inversify';
 import { IConfiguration, IPlugin } from './contracts';
@@ -48,4 +47,7 @@ export default class App extends Container {
     readonly express: Express;
     turnOff(): void;
     config(): IConfiguration;
+    getPlugins(): {
+        [key: string]: IPlugin;
+    };
 }

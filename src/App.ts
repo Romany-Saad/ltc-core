@@ -31,7 +31,7 @@ export const names = {
 
 export default class App extends Container {
   public readonly emitter: EventEmitter = globalEventEmitter
-  private _plugins: { [key: string]: IPlugin } = {}
+  private _plugins: { [ key: string ]: IPlugin } = {}
   private _resourceMapper: ResourceMapper = new ResourceMapper()
 
   constructor () {
@@ -56,14 +56,14 @@ export default class App extends Container {
     if (this._plugins.hasOwnProperty(plugin.name))
       throw new Error(`a plugin with the same name ${plugin.name} already exists.`)
 
-    this._plugins[plugin.name] = plugin
+    this._plugins[ plugin.name ] = plugin
   }
 
   /**
    * gets a plugin from plugins array
    * */
   public getPlugin (name: string): IPlugin {
-    return this._plugins[name]
+    return this._plugins[ name ]
   }
 
   /**
@@ -73,7 +73,7 @@ export default class App extends Container {
     this.emitter.emit(names.EV_PLUGINS_LOADING, this)
 
     for (let pluginName in this._plugins) {
-      await this._plugins[pluginName].load(this)
+      await this._plugins[ pluginName ].load(this)
     }
 
     this.emitter.emit(names.EV_PLUGINS_LOADED, this)
@@ -118,5 +118,9 @@ export default class App extends Container {
     } else {
       throw new Error('configuration object not yet loaded!')
     }
+  }
+
+  public getPlugins () {
+    return this._plugins
   }
 }
