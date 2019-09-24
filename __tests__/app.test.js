@@ -13,6 +13,7 @@ beforeAll(async () => {
     message: 'something',
     error: {t: 'the real one'},
   })
+  logger.error('test', new Error('testing stack'))
 })
 
 // todo: test App.addPlugin method

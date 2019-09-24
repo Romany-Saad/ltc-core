@@ -8,3 +8,4 @@ async function registerPluginsAndInitApp() {
 }
 
 module.exports = registerPluginsAndInitApp
+module.exports.app = app
