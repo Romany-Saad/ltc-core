@@ -13,7 +13,12 @@ beforeAll(async () => {
     message: 'something',
     error: {t: 'the real one'},
   })
-  logger.error('test', new Error('testing stack'))
+  logger.error({
+    level: 'error',
+    message: 'unhandled rejection',
+    date: (new Date()).toISOString(),
+    error: new Error('unhandled rejection mock error'),
+  })
 })
 
 // todo: test App.addPlugin method
