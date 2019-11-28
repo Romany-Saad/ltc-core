@@ -1,11 +1,28 @@
 import IRepository from './IRepository'
 
+type KnownEndpoint = 'getOneById' | 'filterMany' | 'deleteOne' | 'updateOne' | 'deleteMany' | 'addOne'
+type KnownTypes = 'outputType' | 'newItemType' | 'itemPatchType'
+
+interface IApiEndpointDescription {
+  httpMethod: 'get' | 'post' | 'put' | 'delete' | 'patch'
+  type: 'graphql' | 'rest'
+  name: string
+}
+
 export default interface IResourceInfo {
   /**
    * the unique resource name
    * */
   resourceName: string
-
+  api: {
+    endpoints?: {
+      [key in KnownEndpoint | string]?: IApiEndpointDescription
+    }
+    types?: {
+      [key in KnownTypes | string]?: string
+    }
+  }
+  repositoryAddress: Symbol | string
   /**
    * keeps reference to resource's repository instance
    * */
