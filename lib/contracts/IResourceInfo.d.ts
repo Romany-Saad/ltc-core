@@ -2,7 +2,7 @@ import IRepository from './IRepository';
 declare type KnownEndpoint = 'getOneById' | 'filterMany' | 'deleteOne' | 'updateOne' | 'deleteMany' | 'addOne';
 declare type KnownTypes = 'outputType' | 'newItemType' | 'itemPatchType';
 interface IApiEndpointDescription {
-    httpMethod: 'get' | 'post' | 'put' | 'delete' | 'patch';
+    httpMethod?: 'get' | 'post' | 'put' | 'delete' | 'patch';
     type: 'graphql' | 'rest';
     name: string;
 }
