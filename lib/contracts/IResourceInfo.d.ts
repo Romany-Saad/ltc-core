@@ -19,7 +19,7 @@ export default interface IResourceInfo {
             [key in KnownTypes | string]?: string;
         };
     };
-    repositoryAddress: Symbol | string;
+    repositoryAddress: symbol | string;
     /**
      * keeps reference to resource's repository instance
      * */
