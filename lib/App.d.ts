@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import 'reflect-metadata';
 import { Container } from 'inversify';
 import { IConfiguration, IPlugin } from './contracts';
@@ -30,7 +31,7 @@ export default class App extends Container {
     /**
      * retrieves the resource mapper object
      * */
-    readonly resourceMapper: ResourceMapper;
+    get resourceMapper(): ResourceMapper;
     /**
      * adds a new plugin to the plugins array to initialize later
      * */
@@ -44,7 +45,7 @@ export default class App extends Container {
      * */
     load(): Promise<void>;
     start(): Promise<void>;
-    readonly express: Express;
+    get express(): Express;
     turnOff(): void;
     config(): IConfiguration;
     getPlugins(): {
