@@ -1,5 +1,5 @@
-import IRepository from "../contracts/IRepository";
-import IStringKeyedObject from "../contracts/IStringKeyedObject";
+import IRepository from '../contracts/IRepository';
+import IStringKeyedObject from '../contracts/IStringKeyedObject';
 export default abstract class BaseRepository<T> implements IRepository<T> {
     protected _directoryName: string;
     get directoryName(): string;
