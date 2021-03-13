@@ -31,7 +31,7 @@ export default class App extends Container {
     /**
      * retrieves the resource mapper object
      * */
-    get resourceMapper(): ResourceMapper;
+    readonly resourceMapper: ResourceMapper;
     /**
      * adds a new plugin to the plugins array to initialize later
      * */
@@ -45,7 +45,7 @@ export default class App extends Container {
      * */
     load(): Promise<void>;
     start(): Promise<void>;
-    get express(): Express;
+    readonly express: Express;
     turnOff(): void;
     config(): IConfiguration;
     getPlugins(): {

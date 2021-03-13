@@ -1,57 +1,48 @@
-# Main Classes
-## App
-this is the main class that is used to glue all the plugins together
-into one application, it handles the registration and initialization of
-plugins and [merges the GraphQl Schemas](#app-getExecutableSchema)
-from all plugins
+# What is Lattice?
+Lattice is a back-end only framework for rapid
+prototyping without sacrificing customizability, 
+it can be used to get your application up and
+running in a few hours, but it is also aimed
+at better maintainability, so if your project
+proves success you can continue developing
+your codebase towards your more specialized
+domain needs.
 
-### `App.getExecutableSchema(): GraphQLSchema`
-merges all schemas and resolvers from all plugins and returns an
-instance of `GraphQLSchema`
+### Plugins
+lattice follows a micro kernel pluggable
+architecture.
 
-# Contracts
-contracts are just interfaces but we use the term contract just to make
-less vague as the term Interface is used in many contexts in different
-meanings
+plugins give you the freedom and flexibility
+to customize your app to meet your specific
+project requirements and to have as less code
+as possible.
 
-## `ISerializable`
+plugins themselves are also extensible, as most plugins will
+utilize interfaces and IoC, so you can provide your own
+implementation while being able to use the supporting 
+functionality from the plugins (like providing different 
+storage drive to media-plugin while still being able to use
+image resizing provided by it).
 
-### Methods
+### APIs
+currently, lattice-developed plugins are using graphql by 
+default, while not preventing you from using any other APIs
+in your plugins or exposing functionality in any
+plugin through a ReST or any other API type.
 
-#### `serialize(model: IModel): object`
-serializes a given IModel instance into a plain JS object
+### Frontend
+Lattice itself doesn't provide any front-end related features
+therefore it is not opinionated towards any front-end 
+technology, you can use whatever technology you like to 
+communicate through the APIs Lattice or its plugins provide.
 
-## `IModel`
-specifies the constraints on which an object can be used as a DB Model
+# Planned features
+- More declarative style (in-progress)
+- Out of the box Multilingual foundation
+- More generic data layer.
+- Less opinionated APIs.
 
-### Methods
-the `IModel` interface extends the `ISerializable` interface so it has
-its methods in addition to the following.
-
-#### `parse(data: object): IModel`
-parses a given plain JS object into an IModel instance
-
-#### `getIdFieldName(): string`
-returns the name of the id field to be used in setId
-
-#### `set(data: object): void`
-sets all the keys of `data` object to the inner state of the model also
-if a key is equal to value from `getIdFieldName()` it will should be
-handled handle by using `setId()` instead of directly setting it
-
-#### `setId(id: string): void`
-sets the `id` property of the model and do any aside logic related to
-this operation
-
-#### `getId(): string`
-returns the model `id` property
-
-#### `getSchema (): IStringKeyedObject`
-returns the schema used to validate the state of the model
-
-#### `selfValidate (): boolean`
-validates the value returned from IModel.serialize() against
-the model's schema
-
-#### `getErrors (): object`
-returns an array of errors that resulted from the last validation
+# Plugins
+- auth plugin (in-progress)
+- media/storage plugin (in-progress)
+- blog plugin (in-progress)
