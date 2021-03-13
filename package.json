@@ -5,8 +5,8 @@
   "typings": "./lib/index",
   "license": "MIT",
   "scripts": {
-    "test": "jest --watch --coverage --config=jest.config.js",
-    "test:staged": "./node_modules/.bin/jest --forceExit",
+    "test:watch": "jest --watch --coverage --config=jest.config.js",
+    "test": "./node_modules/.bin/jest --forceExit",
     "lib:generate": "rm -rf ./lib/* && tsc && git add ./lib/**",
     "lint": "tslint -p tslint.json",
     "start": "tsc --watch"
@@ -14,7 +14,7 @@
   "pre-commit": [
     "lint",
     "lib:generate",
-    "test:staged"
+    "test"
   ],
   "dependencies": {
     "async-eventemitter": "^0.2.4",
