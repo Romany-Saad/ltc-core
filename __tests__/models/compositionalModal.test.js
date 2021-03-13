@@ -54,8 +54,8 @@ describe('CompositionModel is a model that extends BaseModel class', () => {
 
   it('should  return false when validating invalid data with errors', async () => {
     const x = new CompositionModel(invalidValue)
-    await x.selfValidate()
-    expect(x.getResult()).toHaveProperty('errors.length', 2)
+    const v = await x.selfValidate()
+    expect(v.errors).toHaveProperty('length', 2)
   })
 
   it('should return a correct update patch', async () => {

@@ -4,11 +4,13 @@ import { Context } from 'c2v'
 import { ITypeValidator, IValidationResult } from 'c2v/lib/contracts'
 import { cloneDeep } from 'lodash'
 import { emitter, names } from '../index'
+import { IComputeProperties, IPropertySerializer } from '../decorators'
 
 const ooPatch = require('json8-patch')
 
-export default abstract class BaseModel implements IModel {
+export default abstract class BaseModel implements IModel, IComputeProperties {
 
+  public __computedFields: IPropertySerializer[] = []
   protected id: string = undefined
   protected data: IStringKeyedObject = {}
   protected schema: ITypeValidator = undefined
@@ -91,4 +93,5 @@ export default abstract class BaseModel implements IModel {
   getSchema (): ITypeValidator {
     return this.schema
   }
+
 }

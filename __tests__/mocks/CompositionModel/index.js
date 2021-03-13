@@ -3,6 +3,7 @@ const BaseModel = require("../../../lib/abstractions/BaseModel").default;
 const c2v = require("c2v").default;
 
 module.exports = class CompositionModel extends BaseModel {
+
   parse(data) {
     return new CompositionModel(data);
   }

@@ -1,6 +1,8 @@
 import { IModel, IStringKeyedObject } from '../contracts';
 import { ITypeValidator, IValidationResult } from 'c2v/lib/contracts';
-export default abstract class BaseModel implements IModel {
+import { IComputeProperties, IPropertySerializer } from '../decorators';
+export default abstract class BaseModel implements IModel, IComputeProperties {
+    __computedFields: IPropertySerializer[];
     protected id: string;
     protected data: IStringKeyedObject;
     protected schema: ITypeValidator;

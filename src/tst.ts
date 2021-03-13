@@ -14,5 +14,7 @@ class x extends BaseModel {
 }
 
 const y = new x()
+y.setId('1')
+
 console.log(y.serialize())
 

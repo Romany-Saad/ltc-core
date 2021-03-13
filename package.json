@@ -9,6 +9,7 @@
     "test:staged": "./node_modules/.bin/jest --forceExit",
     "lib:generate": "rm -rf ./lib/* && tsc && git add ./lib/**",
     "lint": "tslint -p tslint.json",
+    "lint:fix": "tslint --fix -p tslint.json",
     "start": "tsc --watch"
   },
   "pre-commit": [
